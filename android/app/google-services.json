@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "536345184770",
+    "project_id": "catcrud-95002",
+    "storage_bucket": "catcrud-95002.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536345184770:android:80e46649e46bdc7051b51b",
+        "android_client_info": {
+          "package_name": "com.bintangardany.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiQPLFB9_WDXky6v4tydlUE0AqSoZxP2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536345184770:android:39bb3582147be26551b51b",
+        "android_client_info": {
+          "package_name": "com.bintangardany.flutterneww"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiQPLFB9_WDXky6v4tydlUE0AqSoZxP2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
