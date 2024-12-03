@@ -1,9 +1,10 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutternews/pages/onboarding.dart';
 import 'package:flutternews/user/widgets/app_bar.dart';
 import 'package:flutternews/user/widgets/banner_section.dart';
 import 'package:flutternews/user/widgets/bottom_navigation.dart';
+import 'package:flutternews/user/widgets/cat_product.dart';
+import 'package:flutternews/user/widgets/food_product.dart';
+import 'package:flutternews/user/widgets/cage_product.dart';
 import 'package:flutternews/user/widgets/profile/profile_user.dart';
 import 'package:flutternews/user/widgets/welcome_section.dart';
 import 'package:flutternews/user/widgets/category_section.dart';
@@ -47,12 +48,15 @@ class _UserHomeState extends State<UserHome> {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         WelcomeSection(),
         CategorySection(),
         FeaturedProducts(),
         BannerSection(),
+        CatProducts(),
+        FoodProducts(),
+        CageProducts(),
       ],
     );
   }
