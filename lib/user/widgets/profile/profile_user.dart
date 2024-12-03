@@ -16,7 +16,7 @@ class ProfileUser extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildEditProfileButton(context),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   _SectionTitle('Personal Information'),
                   _InfoCard(
                     items: [
@@ -25,7 +25,7 @@ class ProfileUser extends StatelessWidget {
                       _InfoItem(icon: Icons.cake, text: 'Date of Birth:'),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   _SectionTitle('Address Information'),
                   _InfoCard(
                     items: [
@@ -63,7 +63,7 @@ class ProfileUser extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Rizky',
+                  'rizky',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -85,19 +85,23 @@ class ProfileUser extends StatelessWidget {
     );
   }
 
-  ElevatedButton _buildEditProfileButton(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: () => _showEditProfileDialog(context),
-      icon: Icon(Icons.edit),
-      label: Text('Edit Profile'),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF4A1E9E),
-        foregroundColor: Colors.white,
-        minimumSize: Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
+  Widget _buildEditProfileButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ElevatedButton.icon(
+          onPressed: () => _showEditProfileDialog(context),
+          icon: Icon(Icons.edit),
+          label: Text('Edit Profile'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFF4A1E9E),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
