@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutternews/user/widgets/app_bar.dart';
 import 'package:flutternews/user/widgets/banner_section.dart';
 import 'package:flutternews/user/widgets/bottom_navigation.dart';
+import 'package:flutternews/user/widgets/profile/profile_user.dart';
 import 'package:flutternews/user/widgets/welcome_section.dart';
 import 'package:flutternews/user/widgets/category_section.dart';
 import 'package:flutternews/user/widgets/featured_products.dart';
@@ -64,5 +65,5 @@ class ChatPage extends StatelessWidget {
 
 class ProfilePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Center(child: Text('Profile'));
+  Widget build(BuildContext context) => ProfileUser();
 }

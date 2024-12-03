@@ -19,15 +19,13 @@ class AllProductsPage extends StatelessWidget {
             mainAxisSpacing: 16.0, // Space between rows
             childAspectRatio: 0.7, // Aspect ratio for each item (height/width)
           ),
-          itemCount: 5, // The number of items you want to display
+          itemCount: 9, // The number of items you want to display
           itemBuilder: (context, index) {
-            // You can add your product list dynamically
             return ProductItem(
               imagePath: 'images/cat4.jpg',
-              name: 'Premium Cat Food', // Customize with real product name
-              price: '29.000', // Customize with real product price
-              description:
-                  'High-quality nutrition', // Customize with real description
+              name: 'Premium Cat Food',
+              price: '29.000',
+              description: 'High-quality nutrition',
             );
           },
         ),

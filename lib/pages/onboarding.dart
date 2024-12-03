@@ -17,10 +17,11 @@ class _OnboardingState extends State<Onboarding> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.only(top: 40.0),
-            height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top,
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-              color: Color(0xFF4A1E9E), // Warna ungu solid
+              color: Color(0xFF4A1E9E),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
