@@ -6,6 +6,12 @@ class AllProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title:
             const Text('All Products', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF4A1E9E),

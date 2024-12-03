@@ -20,20 +20,37 @@ class ProfileUser extends StatelessWidget {
                   _SectionTitle('Personal Information'),
                   _InfoCard(
                     items: [
-                      _InfoItem(icon: Icons.phone, text: 'Phone:'),
-                      _InfoItem(icon: Icons.golf_course, text: 'Gender:'),
-                      _InfoItem(icon: Icons.cake, text: 'Date of Birth:'),
+                      _InfoItem(
+                        icon: Icons.phone,
+                        label: 'Phone:',
+                        value: '082110147321',
+                      ),
+                      _InfoItem(
+                          icon: Icons.golf_course,
+                          label: 'Gender:',
+                          value: 'Male'),
+                      _InfoItem(
+                          icon: Icons.cake,
+                          label: 'Date of Birth:',
+                          value: '2000-01-01'),
                     ],
                   ),
                   SizedBox(height: 10),
                   _SectionTitle('Address Information'),
                   _InfoCard(
                     items: [
-                      _InfoItem(icon: Icons.home, text: 'Street:'),
-                      _InfoItem(icon: Icons.location_city, text: 'Province:'),
-                      _InfoItem(icon: Icons.map, text: 'City:'),
-                      _InfoItem(icon: Icons.location_on, text: 'District:'),
-                      _InfoItem(icon: Icons.flag, text: 'Sub District:'),
+                      _InfoItem(icon: Icons.home, label: 'Street:', value: ''),
+                      _InfoItem(
+                          icon: Icons.location_city,
+                          label: 'Province:',
+                          value: ''),
+                      _InfoItem(icon: Icons.map, label: 'City:', value: ''),
+                      _InfoItem(
+                          icon: Icons.location_on,
+                          label: 'District:',
+                          value: ''),
+                      _InfoItem(
+                          icon: Icons.flag, label: 'Sub District:', value: ''),
                     ],
                   ),
                 ],
@@ -87,7 +104,7 @@ class ProfileUser extends StatelessWidget {
 
   Widget _buildEditProfileButton(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         ElevatedButton.icon(
           onPressed: () => _showEditProfileDialog(context),
@@ -177,7 +194,12 @@ class _InfoCard extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: items
-            .map((item) => _InfoTile(icon: item.icon, text: item.text))
+            .map((item) => _InfoTile(
+                  icon: item.icon,
+                  label: item.label,
+                  value: item.value,
+                  isRightAligned: item.isRightAligned,
+                ))
             .toList(),
       ),
     );
@@ -186,39 +208,65 @@ class _InfoCard extends StatelessWidget {
 
 class _InfoItem {
   final IconData icon;
-  final String text;
+  final String label;
+  final String value;
+  final bool isRightAligned;
 
-  _InfoItem({required this.icon, required this.text});
+  _InfoItem(
+      {required this.icon,
+      required this.label,
+      required this.value,
+      this.isRightAligned = false});
 }
 
 class _InfoTile extends StatelessWidget {
   final IconData icon;
-  final String text;
+  final String label;
+  final String value;
+  final bool isRightAligned;
 
   const _InfoTile({
     Key? key,
     required this.icon,
-    required this.text,
+    required this.label,
+    required this.value,
+    this.isRightAligned = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Icon(icon, color: Color(0xFF4A1E9E)),
-          SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              text,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+                color: Colors.grey[300]!, width: 0.5), // Adding bottom border
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(icon, color: Color(0xFF4A1E9E)),
+            SizedBox(width: 10),
+            Text(
+              label,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black87,
               ),
             ),
-          ),
-        ],
+            Spacer(), // This will push the value to the right side
+            if (value.isNotEmpty)
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
