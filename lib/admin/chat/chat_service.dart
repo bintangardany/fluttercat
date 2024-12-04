@@ -26,7 +26,7 @@ class ChatService {
           .collection('users')
           .doc(currentUser.uid)
           .get();
-
+      
       DocumentSnapshot receiverDoc = await _firestore
           .collection('users')
           .doc(receiverId)
@@ -58,8 +58,8 @@ class ChatService {
 
   // Get comprehensive chat stream for all roles
   Stream<List<Map<String, dynamic>>> getChatStream(
-    String userId,
-    String receiverId,
+    String userId, 
+    String receiverId
   ) {
     return _firestore
         .collection('chats')
@@ -79,8 +79,8 @@ class ChatService {
               'timestamp': data['timestamp'] ?? Timestamp.now(),
             };
           }).toList()
-            ..sort((a, b) =>
-                (b['timestamp'] as Timestamp).compareTo(a['timestamp']));
+            ..sort((a, b) => 
+              (b['timestamp'] as Timestamp).compareTo(a['timestamp']));
         });
   }
 
@@ -115,7 +115,7 @@ class ChatService {
             .collection('users')
             .doc(userId)
             .get();
-
+        
         QuerySnapshot unreadMessages = await _firestore
             .collection('chats')
             .where('senderId', isEqualTo: userId)

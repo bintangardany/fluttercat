@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'chat_service.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class UserChatScreen extends StatefulWidget {
+  const UserChatScreen({super.key});
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _UserChatScreenState createState() => _UserChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _UserChatScreenState extends State<UserChatScreen> {
   final ChatService _chatService = ChatService();
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -27,37 +27,25 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _initializeChatSession() async {
     try {
-      // Check if user is logged in
       final currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
-        throw 'No user is logged in';
+        throw 'Authentication required';
       }
 
-      // Fetch admin ID
-      String? adminId = await _chatService.getAdminId();
-      if (adminId == null) {
-        throw 'No admin available for chat';
-      }
-
-      // Fetch user data from Firestore
-      DocumentSnapshot senderDoc = await FirebaseFirestore.instance
+      // Fetch the current user's document
+      // Find an admin user directly
+      QuerySnapshot adminSnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .doc(currentUser.uid)
+          .where('role', isEqualTo: 'admin')
+          .limit(1)
           .get();
 
-      if (!senderDoc.exists) {
-        throw 'User data not found';
+      if (adminSnapshot.docs.isEmpty) {
+        throw 'No admin available';
       }
 
-      // Validate user role
-      String senderRole = senderDoc['role'] ?? '';
-      if (senderRole != 'user') {
-        throw 'Only users can chat with admins';
-      }
-
-      // Set the admin ID and finish loading
       setState(() {
-        _adminId = adminId;
+        _adminId = adminSnapshot.docs.first.id;
         _isLoading = false;
       });
     } catch (e) {
@@ -71,16 +59,9 @@ class _ChatScreenState extends State<ChatScreen> {
   void _sendMessage() async {
     final message = _messageController.text.trim();
 
-    if (message.isEmpty) {
+    if (message.isEmpty || _adminId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Message cannot be empty')),
-      );
-      return;
-    }
-
-    if (_adminId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No admin available to chat with')),
       );
       return;
     }
@@ -92,9 +73,6 @@ class _ChatScreenState extends State<ChatScreen> {
       );
 
       _messageController.clear();
-
-      setState(() {});
-
       _scrollController.animateTo(
         _scrollController.position.minScrollExtent,
         duration: const Duration(milliseconds: 300),
@@ -130,16 +108,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat with Admin'),
+        title: const Text('Admin Chat'),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false
       ),
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<List<Map<String, dynamic>>>(
+            child: StreamBuilder<List<Map<String, dynamic>>>( 
               stream: _chatService.getChatStream(
-                  FirebaseAuth.instance.currentUser!.uid, _adminId!),
+                FirebaseAuth.instance.currentUser!.uid,
+                _adminId!,
+              ),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -149,18 +130,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
 
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('No messages yet'));
-                }
-
-                final messages = snapshot.data!;
+                final messages = snapshot.data ?? [];
                 return ListView.builder(
                   controller: _scrollController,
+                  reverse: true, // This will display the latest messages at the top
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
-                    final isSentByMe = message['senderId'] ==
+                    final isSentByMe = message['senderId'] == 
                         FirebaseAuth.instance.currentUser!.uid;
+                    
                     final timestamp =
                         message['timestamp']?.toDate() ?? DateTime.now();
                     final timeFormatted =
@@ -216,11 +195,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Type a message...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+                      border: OutlineInputBorder(),
                     ),
                   ),
                 ),

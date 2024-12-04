@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutternews/admin/chat/chat_admin.dart';
 import 'package:flutternews/pages/onboarding.dart';
 
 class AdminHome extends StatelessWidget {
@@ -110,10 +111,15 @@ class AdminHome extends StatelessWidget {
                 },
               ),
               _buildDashboardCard(
-                title: 'Categories',
-                icon: Icons.category,
+                title: 'Admin Chat',
+                icon: Icons.chat,
                 onTap: () {
-                  Navigator.pushNamed(context, '/category-management');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AdminChatScreen(),
+                    ),
+                  );
                 },
               ),
             ],
@@ -139,7 +145,7 @@ class AdminHome extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: Colors.white, // Solid color for the card background
+            color: Colors.white,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

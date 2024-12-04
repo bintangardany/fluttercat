@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
 
 class ChatPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => ChatScreen();
+  Widget build(BuildContext context) => UserChatScreen();
 }
 
 class TransactionsPage extends StatelessWidget {
