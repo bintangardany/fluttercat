@@ -27,60 +27,42 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _initializeChatSession() async {
     try {
-      String? adminId = await _chatService.getAdminId();
-      if (adminId == null) {
-        setState(() {
-          _errorMessage = 'No admin available for chat';
-          _isLoading = false;
-        });
-        return;
-      }
-
+      // Check if user is logged in
       final currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
-        setState(() {
-          _errorMessage = 'No user is logged in';
-          _isLoading = false;
-        });
-        return;
+        throw 'No user is logged in';
       }
 
-      try {
-        DocumentSnapshot senderDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(currentUser.uid)
-            .get();
-
-        if (!senderDoc.exists) {
-          setState(() {
-            _errorMessage = 'User data not found';
-            _isLoading = false;
-          });
-          return;
-        }
-
-        String senderRole = senderDoc['role'] ?? '';
-        if (senderRole != 'user') {
-          setState(() {
-            _errorMessage = 'Only users can chat with admins';
-            _isLoading = false;
-          });
-          return;
-        }
-
-        setState(() {
-          _adminId = adminId;
-          _isLoading = false;
-        });
-      } catch (e) {
-        setState(() {
-          _errorMessage = 'Failed to fetch user data: ${e.toString()}';
-          _isLoading = false;
-        });
+      // Fetch admin ID
+      String? adminId = await _chatService.getAdminId();
+      if (adminId == null) {
+        throw 'No admin available for chat';
       }
+
+      // Fetch user data from Firestore
+      DocumentSnapshot senderDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .get();
+
+      if (!senderDoc.exists) {
+        throw 'User data not found';
+      }
+
+      // Validate user role
+      String senderRole = senderDoc['role'] ?? '';
+      if (senderRole != 'user') {
+        throw 'Only users can chat with admins';
+      }
+
+      // Set the admin ID and finish loading
+      setState(() {
+        _adminId = adminId;
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
-        _errorMessage = 'Failed to initialize chat: ${e.toString()}';
+        _errorMessage = 'Error: $e';
         _isLoading = false;
       });
     }
@@ -91,14 +73,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
     if (message.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Message cannot be empty')),
+        const SnackBar(content: Text('Message cannot be empty')),
       );
       return;
     }
 
     if (_adminId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No admin available to chat with')),
+        const SnackBar(content: Text('No admin available to chat with')),
       );
       return;
     }
@@ -114,13 +96,13 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {});
 
       _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
+        _scrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to send message: ${e.toString()}')),
+        SnackBar(content: Text('Failed to send message: $e')),
       );
     }
   }
@@ -129,18 +111,18 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: Text('Chat')),
-        body: Center(child: CircularProgressIndicator()),
+        appBar: AppBar(title: const Text('Chat')),
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_errorMessage.isNotEmpty) {
       return Scaffold(
-        appBar: AppBar(title: Text('Chat Error')),
+        appBar: AppBar(title: const Text('Chat Error')),
         body: Center(
           child: Text(
             _errorMessage,
-            style: TextStyle(color: Colors.red),
+            style: const TextStyle(color: Colors.red),
           ),
         ),
       );
@@ -148,9 +130,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat with Admin', style: TextStyle(color: Colors.black)),
-        automaticallyImplyLeading: false,
+        title: const Text('Chat with Admin'),
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
@@ -160,7 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   FirebaseAuth.instance.currentUser!.uid, _adminId!),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (snapshot.hasError) {
@@ -168,12 +150,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
 
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No messages yet'));
+                  return const Center(child: Text('No messages yet'));
                 }
 
                 final messages = snapshot.data!;
                 return ListView.builder(
-                  reverse: true,
                   controller: _scrollController,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
@@ -181,45 +162,46 @@ class _ChatScreenState extends State<ChatScreen> {
                     final isSentByMe = message['senderId'] ==
                         FirebaseAuth.instance.currentUser!.uid;
                     final timestamp =
-                        (message['timestamp'] as Timestamp?)?.toDate() ??
-                            DateTime.now();
+                        message['timestamp']?.toDate() ?? DateTime.now();
+                    final timeFormatted =
+                        '${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
 
-                    return Align(
-                      alignment: isSentByMe
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: isSentByMe ? Colors.blue : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: isSentByMe
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                          children: [
-                            Text(
+                    return Column(
+                      crossAxisAlignment: isSentByMe
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: isSentByMe
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
+                              color:
+                                  isSentByMe ? Colors.blue : Colors.grey[300],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
                               message['message'] ?? 'No message',
                               style: TextStyle(
                                 color: isSentByMe ? Colors.white : Colors.black,
                               ),
                             ),
-                            SizedBox(height: 5),
-                            Text(
-                              '${timestamp.hour}:${timestamp.minute.toString().padLeft(2, '0')}',
-                              style: TextStyle(
-                                color: isSentByMe
-                                    ? Colors.white70
-                                    : Colors.black54,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
+                          child: Text(
+                            timeFormatted,
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black54),
+                          ),
+                        ),
+                      ],
                     );
                   },
                 );
@@ -227,7 +209,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 Expanded(
@@ -241,9 +223,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 IconButton(
-                  icon: Icon(Icons.send, color: Colors.blue),
+                  icon: const Icon(Icons.send, color: Colors.blue),
                   onPressed: _sendMessage,
                 ),
               ],

@@ -71,7 +71,7 @@ class ChatPage extends StatelessWidget {
 
 class TransactionsPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Text('asdasdasd');
+  Widget build(BuildContext context) => Text('blank');
 }
 
 class ProfilePage extends StatelessWidget {
