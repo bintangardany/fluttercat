@@ -180,8 +180,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             margin: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             decoration: BoxDecoration(
-                              color:
-                                  isSentByMe ? Colors.blue : Colors.grey[300],
+                              color: isSentByMe
+                                  ? Color(0xFF4A1E9E)
+                                  : Colors.grey[300],
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
@@ -225,7 +226,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 const SizedBox(width: 8),
                 IconButton(
-                  icon: const Icon(Icons.send, color: Colors.blue),
+                  icon: const Icon(Icons.send, color: Color(0xFF4A1E9E)),
                   onPressed: _sendMessage,
                 ),
               ],
