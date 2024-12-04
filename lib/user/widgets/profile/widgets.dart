@@ -9,6 +9,7 @@ class SliverAppBarWidget extends StatelessWidget {
     return SliverAppBar(
       expandedHeight: 200.0,
       floating: false,
+      automaticallyImplyLeading: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
@@ -24,7 +25,10 @@ class SliverAppBarWidget extends StatelessWidget {
                 SizedBox(height: 10),
                 Text(
                   'rizky',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 Text(
                   'rizky@gmail.com',
@@ -55,7 +59,8 @@ class EditProfileButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF4A1E9E),
             foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
         ),
       ],
@@ -76,7 +81,8 @@ class EditProfileButton extends StatelessWidget {
                 TextField(decoration: InputDecoration(labelText: 'Email')),
                 TextField(decoration: InputDecoration(labelText: 'Phone')),
                 TextField(decoration: InputDecoration(labelText: 'Gender')),
-                TextField(decoration: InputDecoration(labelText: 'Date of Birth')),
+                TextField(
+                    decoration: InputDecoration(labelText: 'Date of Birth')),
               ],
             ),
           ),
@@ -112,7 +118,10 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF4A1E9E)),
+        style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF4A1E9E)),
       ),
     );
   }
@@ -129,7 +138,10 @@ class InfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: items.map((item) => InfoTile(icon: item.icon, label: item.label, value: item.value)).toList(),
+        children: items
+            .map((item) =>
+                InfoTile(icon: item.icon, label: item.label, value: item.value))
+            .toList(),
       ),
     );
   }
@@ -141,7 +153,9 @@ class InfoTile extends StatelessWidget {
   final String label;
   final String value;
 
-  const InfoTile({Key? key, required this.icon, required this.label, required this.value}) : super(key: key);
+  const InfoTile(
+      {Key? key, required this.icon, required this.label, required this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

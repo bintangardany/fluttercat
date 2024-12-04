@@ -5,6 +5,7 @@ import 'package:flutternews/pages/onboarding.dart';
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
     title: const Text('Nyanco', style: TextStyle(color: Colors.white)),
+    automaticallyImplyLeading: false,
     flexibleSpace: Container(
       decoration: const BoxDecoration(
         color: Color(0xFF4A1E9E),

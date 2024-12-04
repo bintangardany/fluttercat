@@ -21,9 +21,18 @@ class ProfileUser extends StatelessWidget {
                   const SectionTitle('Personal Information'),
                   InfoCard(
                     items: [
-                      InfoItem(icon: Icons.phone, label: 'Phone:', value: '082110147321'),
-                      InfoItem(icon: Icons.golf_course, label: 'Gender:', value: 'Male'),
-                      InfoItem(icon: Icons.cake, label: 'Date of Birth:', value: '2000-01-01'),
+                      InfoItem(
+                          icon: Icons.phone,
+                          label: 'Phone:',
+                          value: '082110147321'),
+                      InfoItem(
+                          icon: Icons.golf_course,
+                          label: 'Gender:',
+                          value: 'Male'),
+                      InfoItem(
+                          icon: Icons.cake,
+                          label: 'Date of Birth:',
+                          value: '2000-01-01'),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -31,10 +40,17 @@ class ProfileUser extends StatelessWidget {
                   InfoCard(
                     items: [
                       InfoItem(icon: Icons.home, label: 'Street:', value: ''),
-                      InfoItem(icon: Icons.location_city, label: 'Province:', value: ''),
+                      InfoItem(
+                          icon: Icons.location_city,
+                          label: 'Province:',
+                          value: ''),
                       InfoItem(icon: Icons.map, label: 'City:', value: ''),
-                      InfoItem(icon: Icons.location_on, label: 'District:', value: ''),
-                      InfoItem(icon: Icons.flag, label: 'Sub District:', value: ''),
+                      InfoItem(
+                          icon: Icons.location_on,
+                          label: 'District:',
+                          value: ''),
+                      InfoItem(
+                          icon: Icons.flag, label: 'Sub District:', value: ''),
                     ],
                   ),
                 ],

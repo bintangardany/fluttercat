@@ -3,6 +3,7 @@ import 'package:flutternews/user/widgets/app_bar.dart';
 import 'package:flutternews/user/widgets/banner_section.dart';
 import 'package:flutternews/user/widgets/bottom_navigation.dart';
 import 'package:flutternews/user/widgets/cat_product.dart';
+import 'package:flutternews/user/widgets/chat/chat_user.dart';
 import 'package:flutternews/user/widgets/food_product.dart';
 import 'package:flutternews/user/widgets/cage_product.dart';
 import 'package:flutternews/user/widgets/profile/profile_user.dart';
@@ -23,6 +24,7 @@ class _UserHomeState extends State<UserHome> {
   final List<Widget> _pages = [
     HomePage(),
     ChatPage(),
+    TransactionsPage(),
     ProfilePage(),
   ];
 
@@ -64,7 +66,12 @@ class HomePage extends StatelessWidget {
 
 class ChatPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Center(child: Text('Chat'));
+  Widget build(BuildContext context) => ChatScreen();
+}
+
+class TransactionsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Text('asdasdasd');
 }
 
 class ProfilePage extends StatelessWidget {
