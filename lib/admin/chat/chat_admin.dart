@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'chat_service.dart';
 
-class AdminChatScreen extends StatefulWidget {
-  const AdminChatScreen({Key? key}) : super(key: key);
+class AdminChatListScreen extends StatefulWidget {
+  const AdminChatListScreen({Key? key}) : super(key: key);
 
   @override
-  _AdminChatScreenState createState() => _AdminChatScreenState();
+  _AdminChatListScreenState createState() => _AdminChatListScreenState();
 }
 
-class _AdminChatScreenState extends State<AdminChatScreen> {
+class _AdminChatListScreenState extends State<AdminChatListScreen> {
   final ChatService _chatService = ChatService();
-  final TextEditingController _messageController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-
-  String? _selectedUserId;
-  String? _selectedUserEmail;
   List<Map<String, dynamic>> _userChats = [];
 
   @override
@@ -37,19 +32,79 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
     }
   }
 
+  void _navigateToChatDetail(Map<String, dynamic> user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AdminChatDetailScreen(
+          userId: user['userId'],
+          userEmail: user['email'],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Admin Chat List'),
+        centerTitle: true,
+      ),
+      body: _userChats.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: _userChats.length,
+              itemBuilder: (context, index) {
+                final user = _userChats[index];
+                return ListTile(
+                  onTap: () => _navigateToChatDetail(user),
+                  leading: CircleAvatar(
+                    child: Text(user['email'][0].toUpperCase()),
+                  ),
+                  title: Text(user['email']),
+                  subtitle: Text(user['role']),
+                  trailing: user['unreadCount'] > 0
+                      ? Badge(
+                          label: Text(user['unreadCount'].toString()),
+                          child: const Icon(Icons.chat_bubble),
+                        )
+                      : null,
+                );
+              },
+            ),
+    );
+  }
+}
+
+class AdminChatDetailScreen extends StatefulWidget {
+  final String userId;
+  final String userEmail;
+
+  const AdminChatDetailScreen({Key? key, required this.userId, required this.userEmail}) : super(key: key);
+
+  @override
+  _AdminChatDetailScreenState createState() => _AdminChatDetailScreenState();
+}
+
+class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
+  final ChatService _chatService = ChatService();
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
   void _sendMessage() async {
     final message = _messageController.text.trim();
 
-    if (message.isEmpty || _selectedUserId == null) {
+    if (message.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Select a user and enter a message')),
+        const SnackBar(content: Text('Enter a message')),
       );
       return;
     }
 
     try {
       await _chatService.sendMessage(
-        receiverId: _selectedUserId!,
+        receiverId: widget.userId,
         message: message,
       );
 
@@ -66,179 +121,83 @@ class _AdminChatScreenState extends State<AdminChatScreen> {
     }
   }
 
-  void _showUserSelectionBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-      ),
-      builder: (BuildContext context) {
-        return Container(
-          height: 400,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Select a User',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _userChats.length,
-                  itemBuilder: (context, index) {
-                    final user = _userChats[index];
-                    return ListTile(
-                      leading: CircleAvatar(
-                        child: Text(user['email'][0].toUpperCase()),
-                      ),
-                      title: Text('${user['email']}'),
-                      subtitle: Text('${user['role']}'),
-                      trailing: user['unreadCount'] > 0
-                          ? Badge(
-                              label: Text(user['unreadCount'].toString()),
-                              child: const Icon(Icons.chat_bubble),
-                            )
-                          : null,
-                      onTap: () {
-                        setState(() {
-                          _selectedUserId = user['userId'];
-                          _selectedUserEmail = user['email'];
-                        });
-                        Navigator.pop(context);
-                        _chatService.markMessagesAsRead(
-                          _selectedUserId!,
-                          FirebaseAuth.instance.currentUser!.uid,
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_selectedUserEmail ?? 'Admin Support Chat'),
+        title: Text('Chat with ${widget.userEmail}'),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.people),
-            onPressed: _showUserSelectionBottomSheet,
-          ),
-        ],
       ),
-      body: _selectedUserId == null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.chat_bubble_outline, size: 100, color: Colors.grey),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Select a user to start chatting',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.people),
-                    label: const Text('Select User'),
-                    onPressed: _showUserSelectionBottomSheet,
-                  ),
-                ],
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder<List<Map<String, dynamic>>>(
+              stream: _chatService.getChatStream(
+                widget.userId,
+                FirebaseAuth.instance.currentUser?.uid ?? '',
               ),
-            )
-          : Column(
-              children: [
-                Expanded(
-                  child: StreamBuilder<List<Map<String, dynamic>>>( 
-                    stream: _chatService.getChatStream(
-                      _selectedUserId!,
-                      FirebaseAuth.instance.currentUser?.uid ?? '',
-                    ),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-                      final messages = snapshot.data ?? [];
-                      return ListView.builder(
-                        controller: _scrollController,
-                        reverse: true,
-                        itemCount: messages.length,
-                        itemBuilder: (context, index) {
-                          final message = messages[index];
-                          final isSentByMe = message['senderId'] == FirebaseAuth.instance.currentUser?.uid;
+                final messages = snapshot.data ?? [];
+                return ListView.builder(
+                  controller: _scrollController,
+                  reverse: true,
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    final isSentByMe = message['senderId'] == FirebaseAuth.instance.currentUser?.uid;
 
-                          return Align(
-                            alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-                              decoration: BoxDecoration(
-                                color: isSentByMe ? Colors.blue[100] : Colors.grey[200],
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    message['message'],
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  if (!isSentByMe)
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 4),
-                                      child: Text(
-                                        message['senderRole'] ?? '',
-                                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _messageController,
-                          decoration: InputDecoration(
-                            hintText: 'Type your message...',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            filled: true,
-                            fillColor: Colors.grey[200],
-                          ),
+                    return Align(
+                      alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                        decoration: BoxDecoration(
+                          color: isSentByMe ? Colors.blue[100] : Colors.grey[200],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          message['message'],
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      FloatingActionButton(
-                        onPressed: _sendMessage,
-                        child: const Icon(Icons.send),
-                        mini: true,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _messageController,
+                    decoration: InputDecoration(
+                      hintText: 'Type your message...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
                       ),
-                    ],
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
                   ),
+                ),
+                const SizedBox(width: 8),
+                FloatingActionButton(
+                  onPressed: _sendMessage,
+                  child: const Icon(Icons.send),
+                  mini: true,
                 ),
               ],
             ),
+          ),
+        ],
+      ),
     );
   }
 }

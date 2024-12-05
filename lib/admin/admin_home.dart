@@ -117,7 +117,7 @@ class AdminHome extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const AdminChatScreen(),
+                      builder: (context) => const AdminChatListScreen(),
                     ),
                   );
                 },
