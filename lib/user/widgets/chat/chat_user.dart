@@ -108,15 +108,17 @@ class _UserChatScreenState extends State<UserChatScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Chat'),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false
-      ),
+          title: const Text(
+            'Admin Chat',
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: Color(0xFF4A1E9E),
+          automaticallyImplyLeading: false),
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<List<Map<String, dynamic>>>( 
+            child: StreamBuilder<List<Map<String, dynamic>>>(
               stream: _chatService.getChatStream(
                 FirebaseAuth.instance.currentUser!.uid,
                 _adminId!,
@@ -133,13 +135,14 @@ class _UserChatScreenState extends State<UserChatScreen> {
                 final messages = snapshot.data ?? [];
                 return ListView.builder(
                   controller: _scrollController,
-                  reverse: true, // This will display the latest messages at the top
+                  reverse:
+                      true, // This will display the latest messages at the top
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
-                    final isSentByMe = message['senderId'] == 
+                    final isSentByMe = message['senderId'] ==
                         FirebaseAuth.instance.currentUser!.uid;
-                    
+
                     final timestamp =
                         message['timestamp']?.toDate() ?? DateTime.now();
                     final timeFormatted =

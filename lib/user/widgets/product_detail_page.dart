@@ -19,7 +19,7 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  bool isFavorite = false;
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +40,33 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       pinned: true,
       iconTheme: const IconThemeData(color: Colors.white),
       flexibleSpace: FlexibleSpaceBar(
-        background: Hero(
-          tag: 'product-${widget.name}',
-          child: Image.asset(
-            widget.imagePath,
-            fit: BoxFit.cover,
-          ),
+        background: Stack(
+          fit: StackFit.expand,
+          children: [
+            Hero(
+              tag: 'product-${widget.name}',
+              child: Image.asset(
+                widget.imagePath,
+                fit: BoxFit.cover,
+              ),
+            ),
+            _buildGradientOverlay(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGradientOverlay() {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.transparent,
+            Colors.black.withOpacity(0.7),
+          ],
         ),
       ),
     );
@@ -62,6 +83,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           _buildProductPrice(),
           const SizedBox(height: 16),
           _buildProductDescription(),
+          const SizedBox(height: 16),
         ],
       ),
     );
@@ -89,12 +111,25 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget _buildProductDescription() {
-    return Text(
-      widget.description,
-      style: const TextStyle(
-        fontSize: 16,
-        height: 1.5,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Description',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          widget.description,
+          style: const TextStyle(
+            fontSize: 16,
+            height: 1.5,
+          ),
+        ),
+      ],
     );
   }
 
@@ -104,12 +139,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, -3),
-          ),
+          // BoxShadow(
+          //   color: Colors.grey.withOpacity(0.3),
+          //   spreadRadius: 1,
+          //   blurRadius: 3,
+          //   offset: const Offset(0, -3),
+          // ),
         ],
       ),
       child: Row(

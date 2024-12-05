@@ -7,6 +7,7 @@ import 'package:flutternews/user/widgets/chat/chat_user.dart';
 import 'package:flutternews/user/widgets/food_product.dart';
 import 'package:flutternews/user/widgets/cage_product.dart';
 import 'package:flutternews/user/widgets/profile/profile_user.dart';
+import 'package:flutternews/user/widgets/transactions_section.dart';
 import 'package:flutternews/user/widgets/welcome_section.dart';
 import 'package:flutternews/user/widgets/category_section.dart';
 import 'package:flutternews/user/widgets/featured_products.dart';
@@ -24,7 +25,7 @@ class _UserHomeState extends State<UserHome> {
   final List<Widget> _pages = [
     HomePage(),
     ChatPage(),
-    TransactionsPage(),
+    OrderPage(),
     ProfilePage(),
   ];
 
@@ -69,9 +70,9 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) => UserChatScreen();
 }
 
-class TransactionsPage extends StatelessWidget {
+class OrderPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Text('blom jadi');
+  Widget build(BuildContext context) => TransactionsPage();
 }
 
 class ProfilePage extends StatelessWidget {

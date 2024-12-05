@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutternews/pages/onboarding.dart';
+import 'package:flutternews/user/widgets/chart_page.dart';
 
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
@@ -15,7 +16,8 @@ AppBar buildAppBar(BuildContext context) {
       IconButton(
         icon: const Icon(Icons.shopping_cart, color: Colors.white),
         onPressed: () {
-          // TODO: Implement cart functionality
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => CartPage()));
         },
       ),
       IconButton(

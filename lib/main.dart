@@ -64,10 +64,8 @@ class AuthGate extends StatelessWidget {
   }
 
   Future<String?> _getUserRole(String uid) async {
-    final docSnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .get();
+    final docSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
     if (docSnapshot.exists) {
       return docSnapshot.data()?['role'];
     }
