@@ -7,11 +7,11 @@ class CategoryItem extends StatelessWidget {
   final String itemCount;
 
   const CategoryItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
     required this.itemCount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

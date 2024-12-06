@@ -49,6 +49,8 @@ class _UserHomeState extends State<UserHome> {
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -66,16 +68,22 @@ class HomePage extends StatelessWidget {
 }
 
 class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
+
   @override
   Widget build(BuildContext context) => UserChatScreen();
 }
 
 class OrderPage extends StatelessWidget {
+  const OrderPage({super.key});
+
   @override
   Widget build(BuildContext context) => TransactionsPage();
 }
 
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) => ProfileUser();
 }

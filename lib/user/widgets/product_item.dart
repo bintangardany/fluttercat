@@ -8,12 +8,12 @@ class ProductItem extends StatelessWidget {
   final String description;
 
   const ProductItem({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.name,
     required this.price,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

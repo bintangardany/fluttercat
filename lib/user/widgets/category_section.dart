@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'category_item.dart';
 
 class CategorySection extends StatelessWidget {
+  const CategorySection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,9 +26,12 @@ class CategorySection extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: const [
-              CategoryItem(title: 'Cat', icon: Icons.pets, itemCount: '50+ items'),
-              CategoryItem(title: 'Food', icon: Icons.fastfood, itemCount: '50+ items'),
-              CategoryItem(title: 'Cage', icon: Icons.bed, itemCount: '20+ items'),
+              CategoryItem(
+                  title: 'Cat', icon: Icons.pets, itemCount: '50+ items'),
+              CategoryItem(
+                  title: 'Food', icon: Icons.fastfood, itemCount: '50+ items'),
+              CategoryItem(
+                  title: 'Cage', icon: Icons.bed, itemCount: '20+ items'),
             ],
           ),
         ),

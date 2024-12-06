@@ -18,8 +18,10 @@ class AdminHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Dashboard',
-            style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Nyanco',
+          style: TextStyle(color: Colors.white),
+        ),
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFF4A1E9E),
         actions: [

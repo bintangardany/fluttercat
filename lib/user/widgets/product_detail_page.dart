@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutternews/user/widgets/cart/chart_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final String imagePath;
@@ -152,33 +153,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-                // Implement add to cart logic here
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CartPage()));
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
+                backgroundColor: Color(0xFF4A1E9E),
                 foregroundColor: const Color(0xFF4A1E9E),
                 side: const BorderSide(color: Color(0xFF4A1E9E)),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              child: const Text('Add to Cart'),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () {
-                // Implement buy now logic here
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4A1E9E),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
               child: const Text(
-                'Buy Now',
+                'Add to Cart',
                 style: TextStyle(color: Colors.white),
               ),
             ),

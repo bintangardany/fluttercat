@@ -3,6 +3,8 @@ import 'product_item.dart';
 import 'all_products_page.dart'; // Import the new page
 
 class FeaturedProducts extends StatelessWidget {
+  const FeaturedProducts({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(

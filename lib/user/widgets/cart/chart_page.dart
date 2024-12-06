@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'checkout_page.dart';
+import 'package:flutternews/user/widgets/cart/cart_item.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -21,14 +23,14 @@ class _CartPageState extends State<CartPage> {
       price: 150000,
       quantity: 2,
     ),
-    CartItem(
-      name: 'Premium Cat Food',
-      imagePath: 'images/cat4.jpg',
-      price: 150000,
-      quantity: 3,
-    ),
+    // CartItem(
+    //   name: 'Premium Cat Food',
+    //   imagePath: 'images/cat4.jpg',
+    //   price: 150000,
+    //   quantity: 3,
+    // ),
   ];
-
+  double shippingCost = 20000;
   double get totalPrice {
     return cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
   }
@@ -71,7 +73,6 @@ class _CartPageState extends State<CartPage> {
       flexibleSpace: FlexibleSpaceBar(
         title: const Text('Your Shopping Cart',
             style: TextStyle(color: Colors.white)),
-        centerTitle: true,
         background: Container(
           decoration: const BoxDecoration(color: Color(0xFF4A1E9E)),
         ),
@@ -262,7 +263,14 @@ class _CartPageState extends State<CartPage> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                // Implement checkout logic here
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CheckoutPage(
+                              totalPrice: totalPrice,
+                              shippingCost: shippingCost,
+                              cartItems: cartItems,
+                            )));
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -278,29 +286,6 @@ class _CartPageState extends State<CartPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class CartItem {
-  final String name;
-  final String imagePath;
-  final double price;
-  final int quantity;
-
-  CartItem({
-    required this.name,
-    required this.imagePath,
-    required this.price,
-    required this.quantity,
-  });
-
-  CartItem copyWith({int? quantity}) {
-    return CartItem(
-      name: this.name,
-      imagePath: this.imagePath,
-      price: this.price,
-      quantity: quantity ?? this.quantity,
     );
   }
 }

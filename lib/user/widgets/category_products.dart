@@ -5,9 +5,9 @@ class CategoryProducts extends StatelessWidget {
   final String category;
 
   const CategoryProducts({
-    Key? key,
+    super.key,
     required this.category,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

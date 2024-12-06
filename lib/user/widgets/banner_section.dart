@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutternews/user/widgets/all_products_page.dart';
 
 class BannerSection extends StatelessWidget {
+  const BannerSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'chat_service.dart';
 
 class AdminChatListScreen extends StatefulWidget {
-  const AdminChatListScreen({Key? key}) : super(key: key);
+  const AdminChatListScreen({super.key});
 
   @override
   _AdminChatListScreenState createState() => _AdminChatListScreenState();
@@ -21,7 +21,8 @@ class _AdminChatListScreenState extends State<AdminChatListScreen> {
 
   Future<void> _fetchUserChats() async {
     try {
-      List<Map<String, dynamic>> userChats = await _chatService.getUsersForAdmin();
+      List<Map<String, dynamic>> userChats =
+          await _chatService.getUsersForAdmin();
       setState(() {
         _userChats = userChats;
       });
@@ -81,7 +82,8 @@ class AdminChatDetailScreen extends StatefulWidget {
   final String userId;
   final String userEmail;
 
-  const AdminChatDetailScreen({Key? key, required this.userId, required this.userEmail}) : super(key: key);
+  const AdminChatDetailScreen(
+      {super.key, required this.userId, required this.userEmail});
 
   @override
   _AdminChatDetailScreenState createState() => _AdminChatDetailScreenState();
@@ -148,15 +150,21 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
-                    final isSentByMe = message['senderId'] == FirebaseAuth.instance.currentUser?.uid;
+                    final isSentByMe = message['senderId'] ==
+                        FirebaseAuth.instance.currentUser?.uid;
 
                     return Align(
-                      alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
+                      alignment: isSentByMe
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
                       child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 14),
                         decoration: BoxDecoration(
-                          color: isSentByMe ? Colors.blue[100] : Colors.grey[200],
+                          color:
+                              isSentByMe ? Colors.blue[100] : Colors.grey[200],
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
@@ -190,8 +198,8 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                 const SizedBox(width: 8),
                 FloatingActionButton(
                   onPressed: _sendMessage,
-                  child: const Icon(Icons.send),
                   mini: true,
+                  child: const Icon(Icons.send),
                 ),
               ],
             ),

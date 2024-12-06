@@ -3,6 +3,8 @@ import 'package:flutternews/user/widgets/category_products.dart';
 import 'product_item.dart';
 
 class CageProducts extends StatelessWidget {
+  const CageProducts({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(

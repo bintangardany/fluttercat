@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// SliverAppBar Widget
 class SliverAppBarWidget extends StatelessWidget {
-  const SliverAppBarWidget({Key? key}) : super(key: key);
+  const SliverAppBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class SliverAppBarWidget extends StatelessWidget {
 
 /// Edit Profile Button
 class EditProfileButton extends StatelessWidget {
-  const EditProfileButton({Key? key}) : super(key: key);
+  const EditProfileButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class EditProfileButton extends StatelessWidget {
 class SectionTitle extends StatelessWidget {
   final String title;
 
-  const SectionTitle(this.title, {Key? key}) : super(key: key);
+  const SectionTitle(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +132,7 @@ class SectionTitle extends StatelessWidget {
 class InfoCard extends StatelessWidget {
   final List<InfoItem> items;
 
-  const InfoCard({Key? key, required this.items}) : super(key: key);
+  const InfoCard({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -155,8 +155,10 @@ class InfoTile extends StatelessWidget {
   final String value;
 
   const InfoTile(
-      {Key? key, required this.icon, required this.label, required this.value})
-      : super(key: key);
+      {super.key,
+      required this.icon,
+      required this.label,
+      required this.value});
 
   @override
   Widget build(BuildContext context) {

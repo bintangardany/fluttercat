@@ -12,49 +12,23 @@ class _TransactionsPageState extends State<TransactionsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  // Daftar transaksi yang belum diproses
+  // List of pending transactions
   List<Transaction> pendingTransactions = [
-    // Transaction(
-    //   orderId: '01',
-    //   productName: 'Premium Cat Food',
-    //   price: 15000,
-    //   imagePath: 'images/cat4.jpg', // URL gambar placeholder
-    //   status: 'Pending',
-    //   quantity: 2,
-    // ),
-    // Transaction(
-    //   orderId: '02',
-    //   productName: 'Premium Cat Food',
-    //   price: 15000,
-    //   imagePath: 'images/cat4.jpg',
-    //   status: 'Pending',
-    //   quantity: 1,
-    // ),
+    Transaction(
+      orderId: '01',
+      productName: 'Premium Cat Food',
+      price: 15000,
+      imagePath: 'images/cat4.jpg',
+      status: 'Pending',
+      quantity: 2,
+    ),
   ];
 
-  // Daftar transaksi yang sedang diproses
-  List<Transaction> onProcessTransactions = [
-    // Transaction(
-    //   orderId: '03',
-    //   productName: 'Premium Cat Food',
-    //   price: 15000,
-    //   imagePath: 'images/cat4.jpg',
-    //   status: 'On Process',
-    //   quantity: 3,
-    // ),
-  ];
+  // List of transactions in process
+  List<Transaction> onProcessTransactions = [];
 
-  // Daftar transaksi yang berhasil
-  List<Transaction> successTransactions = [
-    // Transaction(
-    //   orderId: '04',
-    //   productName: 'Premium Cat Food',
-    //   price: 15000,
-    //   imagePath: 'images/cat4.jpg',
-    //   status: 'Success',
-    //   quantity: 1,
-    // )
-  ];
+  // List of successful transactions
+  List<Transaction> successTransactions = [];
 
   @override
   void initState() {
@@ -106,14 +80,15 @@ class _TransactionsPageState extends State<TransactionsPage>
     );
   }
 
-  // Membuat AppBar
+  // Build AppBar
   Widget _buildAppBar() {
     return SliverAppBar(
       floating: false,
       automaticallyImplyLeading: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        title: const Text('Order History', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Order History', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         background: Container(
           decoration: const BoxDecoration(color: Color(0xFF4A1E9E)),
@@ -122,7 +97,7 @@ class _TransactionsPageState extends State<TransactionsPage>
     );
   }
 
-  // Membuat TabBar
+  // Build TabBar
   Widget _buildTabBar() {
     return TabBar(
       controller: _tabController,
@@ -133,10 +108,11 @@ class _TransactionsPageState extends State<TransactionsPage>
       ],
     );
   }
-  // Menampilkan daftar transaksi
+
+  // Display transaction list
   Widget _buildTransactionList(List<Transaction> transactions) {
     if (transactions.isEmpty) {
-      return _buildEmptyState(); // Menampilkan pesan kosong jika tidak ada transaksi
+      return _buildEmptyState();
     }
 
     return ListView.builder(
@@ -148,8 +124,7 @@ class _TransactionsPageState extends State<TransactionsPage>
     );
   }
 
-
-  // Membuat item transaksi
+  // Build transaction item
   Widget _buildTransactionItem(Transaction transaction) {
     return Card(
       elevation: 4,
@@ -169,16 +144,20 @@ class _TransactionsPageState extends State<TransactionsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Order ID: ${transaction.orderId}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
+                  ),
                   Text(transaction.productName,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
-                  Text('Order ID: ${transaction.orderId}',
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600])),
-                  const SizedBox(height: 4),
                   Text(
                     'Quantity: ${transaction.quantity}',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -192,17 +171,21 @@ class _TransactionsPageState extends State<TransactionsPage>
                                 ? Colors.blue
                                 : Colors.green),
                   ),
+                  SizedBox(height: 4),
                 ],
               ),
             ),
-            Text('Rp${(transaction.price * transaction.quantity).toStringAsFixed(0)}'),
+            Text(
+              'Rp${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
           ],
         ),
       ),
     );
   }
 
-  // Menampilkan pesan jika tidak ada transaksi
+  // Display message if no transactions
   Widget _buildEmptyState() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -217,7 +200,11 @@ class _TransactionsPageState extends State<TransactionsPage>
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => UserHome(),));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserHome(),
+                ));
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF4A1E9E),
@@ -233,14 +220,14 @@ class _TransactionsPageState extends State<TransactionsPage>
   }
 }
 
-// Kelas untuk mendefinisikan struktur transaksi
+// Class to define transaction structure
 class Transaction {
   final String orderId;
   final String productName;
   final double price;
   final String imagePath;
   final String status;
-  final int quantity; // Menambahkan quantity
+  final int quantity;
 
   Transaction({
     required this.orderId,
@@ -248,6 +235,6 @@ class Transaction {
     required this.price,
     required this.imagePath,
     required this.status,
-    required this.quantity, // Inisialisasi quantity
+    required this.quantity,
   });
 }

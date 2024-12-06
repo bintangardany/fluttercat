@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'product_item.dart';
 
 class AllProductsPage extends StatelessWidget {
+  const AllProductsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,6 +3,8 @@ import 'package:flutternews/user/widgets/category_products.dart';
 import 'product_item.dart';
 
 class CatProducts extends StatelessWidget {
+  const CatProducts({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
