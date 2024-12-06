@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutternews/user/user_home.dart';
 
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({super.key});
@@ -13,47 +14,46 @@ class _TransactionsPageState extends State<TransactionsPage>
 
   // Daftar transaksi yang belum diproses
   List<Transaction> pendingTransactions = [
-    Transaction(
-      orderId: '01',
-      productName: 'Premium chat Food',
-      price: 15000,
-      imagePath: 'images/cat4.jpg',
-      status: 'Pending',
-    ),
-    Transaction(
-      orderId: '02',
-      productName: 'Premium chat Food',
-      price: 15000,
-      imagePath: 'images/cat4.jpg',
-      status: 'Pending',
-    ),
+    // Transaction(
+    //   orderId: '01',
+    //   productName: 'Premium Cat Food',
+    //   price: 15000,
+    //   imagePath: 'images/cat4.jpg', // URL gambar placeholder
+    //   status: 'Pending',
+    //   quantity: 2,
+    // ),
+    // Transaction(
+    //   orderId: '02',
+    //   productName: 'Premium Cat Food',
+    //   price: 15000,
+    //   imagePath: 'images/cat4.jpg',
+    //   status: 'Pending',
+    //   quantity: 1,
+    // ),
   ];
 
   // Daftar transaksi yang sedang diproses
   List<Transaction> onProcessTransactions = [
-    Transaction(
-      orderId: '01',
-      productName: 'Premium chat Food',
-      price: 15000,
-      imagePath: 'images/cat4.jpg',
-      status: 'On Process',
-    ),
-    Transaction(
-      orderId: '02',
-      productName: 'Premium chat Food',
-      price: 15000,
-      imagePath: 'images/cat4.jpg',
-      status: 'On Process',
-    ),
+    // Transaction(
+    //   orderId: '03',
+    //   productName: 'Premium Cat Food',
+    //   price: 15000,
+    //   imagePath: 'images/cat4.jpg',
+    //   status: 'On Process',
+    //   quantity: 3,
+    // ),
   ];
+
+  // Daftar transaksi yang berhasil
   List<Transaction> successTransactions = [
-    Transaction(
-      orderId: '01',
-      productName: 'Premium chat Food',
-      price: 15000,
-      imagePath: 'images/cat4.jpg',
-      status: 'Success',
-    )
+    // Transaction(
+    //   orderId: '04',
+    //   productName: 'Premium Cat Food',
+    //   price: 15000,
+    //   imagePath: 'images/cat4.jpg',
+    //   status: 'Success',
+    //   quantity: 1,
+    // )
   ];
 
   @override
@@ -83,17 +83,14 @@ class _TransactionsPageState extends State<TransactionsPage>
                     child: Column(
                       children: [
                         _buildTabBar(),
-                        // Gunakan TabBarView untuk menampilkan konten berdasarkan tab yang dipilih
                         SizedBox(
                           height: MediaQuery.of(context).size.height - 200,
                           child: TabBarView(
                             controller: _tabController,
                             children: [
-                              _buildTransactionList(
-                                  pendingTransactions), // Tab Pending
+                              _buildTransactionList(pendingTransactions),
                               _buildTransactionList(onProcessTransactions),
-                              _buildTransactionList(
-                                  successTransactions), // Tab On Process
+                              _buildTransactionList(successTransactions),
                             ],
                           ),
                         ),
@@ -116,7 +113,7 @@ class _TransactionsPageState extends State<TransactionsPage>
       automaticallyImplyLeading: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        title: const Text('Order', style: TextStyle(color: Colors.white)),
+        title: const Text('Order History', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         background: Container(
           decoration: const BoxDecoration(color: Color(0xFF4A1E9E)),
@@ -136,7 +133,6 @@ class _TransactionsPageState extends State<TransactionsPage>
       ],
     );
   }
-
   // Menampilkan daftar transaksi
   Widget _buildTransactionList(List<Transaction> transactions) {
     if (transactions.isEmpty) {
@@ -144,20 +140,20 @@ class _TransactionsPageState extends State<TransactionsPage>
     }
 
     return ListView.builder(
-      shrinkWrap: true,
       itemCount: transactions.length,
       itemBuilder: (context, index) {
         final transaction = transactions[index];
-        return _buildTransactionItem(transaction, index);
+        return _buildTransactionItem(transaction);
       },
     );
   }
 
+
   // Membuat item transaksi
-  Widget _buildTransactionItem(Transaction transaction, int index) {
+  Widget _buildTransactionItem(Transaction transaction) {
     return Card(
       elevation: 4,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(top: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -180,7 +176,11 @@ class _TransactionsPageState extends State<TransactionsPage>
                   Text('Order ID: ${transaction.orderId}',
                       style: TextStyle(fontSize: 16, color: Colors.grey[600])),
                   const SizedBox(height: 4),
-                  // Menampilkan status transaksi
+                  Text(
+                    'Quantity: ${transaction.quantity}',
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                  const SizedBox(height: 4),
                   Text(
                     transaction.status,
                     style: TextStyle(
@@ -195,7 +195,7 @@ class _TransactionsPageState extends State<TransactionsPage>
                 ],
               ),
             ),
-            Text('Rp${transaction.price.toStringAsFixed(0)}'),
+            Text('Rp${(transaction.price * transaction.quantity).toStringAsFixed(0)}'),
           ],
         ),
       ),
@@ -217,15 +217,14 @@ class _TransactionsPageState extends State<TransactionsPage>
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
-            Navigator.pop(
-                context); // Tombol untuk kembali ke halaman sebelumnya
+            Navigator.push(context, MaterialPageRoute(builder: (context) => UserHome(),));
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF4A1E9E),
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           ),
           child: const Text(
-            'Mulai Belanja',
+            'Order Now',
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -240,13 +239,15 @@ class Transaction {
   final String productName;
   final double price;
   final String imagePath;
-  final String status; // Status transaksi (Pending, On Process, Success)
+  final String status;
+  final int quantity; // Menambahkan quantity
 
   Transaction({
     required this.orderId,
     required this.productName,
     required this.price,
     required this.imagePath,
-    required this.status, // Initialize status
+    required this.status,
+    required this.quantity, // Inisialisasi quantity
   });
 }

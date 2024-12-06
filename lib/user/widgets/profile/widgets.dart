@@ -10,7 +10,7 @@ class SliverAppBarWidget extends StatelessWidget {
       expandedHeight: 200.0,
       floating: false,
       automaticallyImplyLeading: false,
-      pinned: true,
+      pinned: false,
       backgroundColor: Colors.transparent,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
