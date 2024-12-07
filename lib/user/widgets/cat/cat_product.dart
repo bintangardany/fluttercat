@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'product_item.dart';
-import 'all_products_page.dart'; // Import the new page
+import 'package:flutternews/user/widgets/category/category_products.dart';
+import '../product_item.dart';
 
-class FeaturedProducts extends StatelessWidget {
-  const FeaturedProducts({super.key});
+class CatProducts extends StatelessWidget {
+  const CatProducts({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class FeaturedProducts extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Featured Products',
+                'Cat Products',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ class FeaturedProducts extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AllProductsPage(),
+                      builder: (context) => CategoryProducts(category: 'Cat'),
                     ),
                   );
                 },
@@ -50,7 +50,7 @@ class FeaturedProducts extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            children: [
+            children: [ 
               ProductItem(
                 imagePath: 'images/cat4.jpg',
                 name: 'Premium Cat Food',

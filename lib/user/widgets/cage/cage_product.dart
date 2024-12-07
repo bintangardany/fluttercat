@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutternews/user/widgets/category_products.dart';
-import 'product_item.dart';
+import 'package:flutternews/user/widgets/category/category_products.dart';
+import '../product_item.dart';
 
 class CageProducts extends StatelessWidget {
   const CageProducts({super.key});

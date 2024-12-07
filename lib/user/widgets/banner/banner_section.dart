@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutternews/user/widgets/all_products_page.dart';
+import 'package:flutternews/user/widgets/featured/all_products_page.dart';
 
 class BannerSection extends StatelessWidget {
   const BannerSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isMobile = screenWidth < 600;
 
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
         padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 16.0 : 32.0,
+          horizontal: 12.0,
           vertical: 20.0,
         ),
         decoration: BoxDecoration(
@@ -52,8 +50,8 @@ class BannerSection extends StatelessWidget {
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(
-                            vertical: isMobile ? 12.0 : 16.0,
-                            horizontal: isMobile ? 16.0 : 24.0,
+                            vertical: 12.0,
+                            horizontal: 16.0,
                           ),
                           backgroundColor: Colors.deepPurple[600],
                           shape: RoundedRectangleBorder(
@@ -63,7 +61,7 @@ class BannerSection extends StatelessWidget {
                         child: Text(
                           'Pawsome Deals at Nyanco!',
                           style: TextStyle(
-                            fontSize: isMobile ? 18.0 : 22.0,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -73,7 +71,7 @@ class BannerSection extends StatelessWidget {
                       Text(
                         'Treat your furry friend to the best products and irresistible offers!',
                         style: TextStyle(
-                          fontSize: isMobile ? 12.0 : 14.0,
+                          fontSize: 12.0,
                           color: Colors.white.withOpacity(0.9),
                         ),
                       ),

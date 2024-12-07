@@ -162,27 +162,60 @@ class InfoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Icon(icon, color: const Color(0xFF4A1E9E)),
-          const SizedBox(width: 10),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16, color: Colors.black87),
-          ),
-          const Spacer(),
-          Text(
-            value,
-            style: const TextStyle(fontSize: 16, color: Colors.black87),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => _showDetailDialog(context, label, value),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: const Color(0xFF4A1E9E)),
+            const SizedBox(width: 10),
+            Expanded(
+              flex: 2,
+              child: Text(
+                label,
+                style: const TextStyle(fontSize: 16, color: Colors.black87),
+              ),
+            ),
+            const Spacer(),
+            Expanded(
+              flex: 3,
+              child: Text(
+                value,
+                style: const TextStyle(fontSize: 16, color: Colors.black87),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+  void _showDetailDialog(BuildContext context, String label, String value) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(label),
+          content: SingleChildScrollView(
+            child: Text(value, style: const TextStyle(fontSize: 16)),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 /// InfoItem Model (Jika Perlu untuk Keperluan Lain)
 class InfoItem {

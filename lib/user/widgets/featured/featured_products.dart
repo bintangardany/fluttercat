@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutternews/user/widgets/category_products.dart';
-import 'product_item.dart';
+import '../product_item.dart';
+import 'all_products_page.dart'; // Import the new page
 
-class CatProducts extends StatelessWidget {
-  const CatProducts({super.key});
+class FeaturedProducts extends StatelessWidget {
+  const FeaturedProducts({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class CatProducts extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Cat Products',
+                'Featured Products',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -25,11 +25,10 @@ class CatProducts extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // Navigate to the full product list page (AllProductsPage)
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CategoryProducts(category: 'Cat'),
+                      builder: (context) => AllProductsPage(),
                     ),
                   );
                 },

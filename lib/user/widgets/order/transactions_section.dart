@@ -50,21 +50,27 @@ class _TransactionsPageState extends State<TransactionsPage>
           Expanded(
             child: CustomScrollView(
               slivers: [
-                _buildAppBar(),
+                const CustomAppBar(title: 'Order History'),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        _buildTabBar(),
+                        CustomTabBar(controller: _tabController),
                         SizedBox(
                           height: MediaQuery.of(context).size.height - 200,
                           child: TabBarView(
                             controller: _tabController,
                             children: [
-                              _buildTransactionList(pendingTransactions),
-                              _buildTransactionList(onProcessTransactions),
-                              _buildTransactionList(successTransactions),
+                              TransactionList(
+                                transactions: pendingTransactions,
+                              ),
+                              TransactionList(
+                                transactions: onProcessTransactions,
+                              ),
+                              TransactionList(
+                                transactions: successTransactions,
+                              ),
                             ],
                           ),
                         ),
@@ -79,16 +85,21 @@ class _TransactionsPageState extends State<TransactionsPage>
       ),
     );
   }
+}
 
-  // Build AppBar
-  Widget _buildAppBar() {
+// Widget untuk AppBar
+class CustomAppBar extends StatelessWidget {
+  final String title;
+  const CustomAppBar({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return SliverAppBar(
       floating: false,
       automaticallyImplyLeading: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        title:
-            const Text('Order History', style: TextStyle(color: Colors.white)),
+        title: Text(title, style: const TextStyle(color: Colors.white)),
         centerTitle: true,
         background: Container(
           decoration: const BoxDecoration(color: Color(0xFF4A1E9E)),
@@ -96,11 +107,17 @@ class _TransactionsPageState extends State<TransactionsPage>
       ),
     );
   }
+}
 
-  // Build TabBar
-  Widget _buildTabBar() {
+// Widget untuk TabBar
+class CustomTabBar extends StatelessWidget {
+  final TabController controller;
+  const CustomTabBar({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return TabBar(
-      controller: _tabController,
+      controller: controller,
       tabs: const [
         Tab(text: 'Pending'),
         Tab(text: 'On Process'),
@@ -108,24 +125,37 @@ class _TransactionsPageState extends State<TransactionsPage>
       ],
     );
   }
+}
 
-  // Display transaction list
-  Widget _buildTransactionList(List<Transaction> transactions) {
+// Widget untuk List Transaksi
+class TransactionList extends StatelessWidget {
+  final List<Transaction> transactions;
+  const TransactionList({Key? key, required this.transactions})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     if (transactions.isEmpty) {
-      return _buildEmptyState();
+      return const EmptyState();
     }
 
     return ListView.builder(
       itemCount: transactions.length,
       itemBuilder: (context, index) {
         final transaction = transactions[index];
-        return _buildTransactionItem(transaction);
+        return TransactionItem(transaction: transaction);
       },
     );
   }
+}
 
-  // Build transaction item
-  Widget _buildTransactionItem(Transaction transaction) {
+// Widget untuk Item Transaksi
+class TransactionItem extends StatelessWidget {
+  final Transaction transaction;
+  const TransactionItem({Key? key, required this.transaction}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.only(top: 16),
@@ -157,7 +187,8 @@ class _TransactionsPageState extends State<TransactionsPage>
                   const SizedBox(height: 4),
                   Text(
                     'Quantity: ${transaction.quantity}',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -171,22 +202,26 @@ class _TransactionsPageState extends State<TransactionsPage>
                                 ? Colors.blue
                                 : Colors.green),
                   ),
-                  SizedBox(height: 4),
                 ],
               ),
             ),
             Text(
               'Rp${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  // Display message if no transactions
-  Widget _buildEmptyState() {
+// Widget untuk Empty State
+class EmptyState extends StatelessWidget {
+  const EmptyState({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -220,7 +255,7 @@ class _TransactionsPageState extends State<TransactionsPage>
   }
 }
 
-// Class to define transaction structure
+// Class untuk struktur Transaksi
 class Transaction {
   final String orderId;
   final String productName;

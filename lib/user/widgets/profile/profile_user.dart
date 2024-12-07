@@ -39,18 +39,19 @@ class ProfileUser extends StatelessWidget {
                   const SectionTitle('Address Information'),
                   InfoCard(
                     items: [
-                      InfoItem(icon: Icons.home, label: 'Street:', value: ''),
-                      InfoItem(
-                          icon: Icons.location_city,
-                          label: 'Province:',
-                          value: ''),
-                      InfoItem(icon: Icons.map, label: 'City:', value: ''),
-                      InfoItem(
+                      InfoItem(icon: Icons.home, label: 'Street:', value: 'Jl. Teratai No.217, RT.001/RW.008'),
+                                            InfoItem(
+                          icon: Icons.flag, label: 'Sub District:', value: 'Ciketing Udik'),
+                                                InfoItem(
                           icon: Icons.location_on,
                           label: 'District:',
-                          value: ''),
-                      InfoItem(
-                          icon: Icons.flag, label: 'Sub District:', value: ''),
+                          value: 'Bantargebang'),
+                      InfoItem(icon: Icons.map, label: 'City:', value: 'Kota Bekasi'),
+                                            InfoItem(
+                          icon: Icons.location_city,
+                          label: 'Province:',
+                          value: 'Jawa Barat'),
+
                     ],
                   ),
                 ],

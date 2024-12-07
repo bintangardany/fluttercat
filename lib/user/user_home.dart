@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutternews/user/widgets/app_bar.dart';
-import 'package:flutternews/user/widgets/banner_section.dart';
+import 'package:flutternews/user/widgets/banner/banner_section.dart';
 import 'package:flutternews/user/widgets/bottom_navigation.dart';
-import 'package:flutternews/user/widgets/cat_product.dart';
+import 'package:flutternews/user/widgets/cat/cat_product.dart';
 import 'package:flutternews/user/widgets/chat/chat_user.dart';
-import 'package:flutternews/user/widgets/food_product.dart';
-import 'package:flutternews/user/widgets/cage_product.dart';
+import 'package:flutternews/user/widgets/food/food_product.dart';
+import 'package:flutternews/user/widgets/cage/cage_product.dart';
 import 'package:flutternews/user/widgets/profile/profile_user.dart';
-import 'package:flutternews/user/widgets/transactions_section.dart';
-import 'package:flutternews/user/widgets/welcome_section.dart';
-import 'package:flutternews/user/widgets/category_section.dart';
-import 'package:flutternews/user/widgets/featured_products.dart';
+import 'package:flutternews/user/widgets/order/transactions_section.dart';
+import 'package:flutternews/user/widgets/home/welcome_section.dart';
+import 'package:flutternews/user/widgets/category/category_section.dart';
+import 'package:flutternews/user/widgets/featured/featured_products.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -62,6 +62,7 @@ class HomePage extends StatelessWidget {
         CatProducts(),
         FoodProducts(),
         CageProducts(),
+        SizedBox(height: 12.0,),
       ],
     );
   }

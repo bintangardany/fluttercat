@@ -268,7 +268,6 @@ class _CartPageState extends State<CartPage> {
                     MaterialPageRoute(
                         builder: (context) => CheckoutPage(
                               totalPrice: totalPrice,
-                              shippingCost: shippingCost,
                               cartItems: cartItems,
                             )));
               },

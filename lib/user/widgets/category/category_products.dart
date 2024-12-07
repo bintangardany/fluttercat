@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'product_item.dart';
+import '../product_item.dart';
 
 class CategoryProducts extends StatelessWidget {
   final String category;
@@ -41,7 +41,7 @@ class CategoryProducts extends StatelessWidget {
             itemCount: products.length,
             itemBuilder: (context, index) {
               return ProductItem(
-                imagePath: products[index]['image']!,
+                imagePath: products[index]['imagePath']!,
                 name: products[index]['name']!,
                 price: products[index]['price']!,
                 description: products[index]['description']!,
@@ -59,13 +59,13 @@ class CategoryProducts extends StatelessWidget {
       case 'Cat':
         return [
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Tree',
             'price': '49.000',
             'description': 'Perfect play tower for your cat',
           },
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Scratcher',
             'price': '29.000',
             'description': 'Keep your cat\'s claws healthy',
@@ -74,13 +74,13 @@ class CategoryProducts extends StatelessWidget {
       case 'Food':
         return [
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Tree',
             'price': '49.000',
             'description': 'Perfect play tower for your cat',
           },
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Scratcher',
             'price': '29.000',
             'description': 'Keep your cat\'s claws healthy',
@@ -89,25 +89,25 @@ class CategoryProducts extends StatelessWidget {
       case 'Cage':
         return [
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Tree',
             'price': '49.000',
             'description': 'Perfect play tower for your cat',
           },
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Scratcher',
             'price': '29.000',
             'description': 'Keep your cat\'s claws healthy',
           },
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Scratcher',
             'price': '29.000',
             'description': 'Keep your cat\'s claws healthy',
           },
           {
-            'image': 'images/cat4.jpg',
+            'imagePath': 'images/cat4.jpg',
             'name': 'Cat Scratcher',
             'price': '29.000',
             'description': 'Keep your cat\'s claws healthy',

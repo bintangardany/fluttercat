@@ -3,23 +3,36 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'cart_item.dart';
 
-class CheckoutPage extends StatelessWidget {
+class CheckoutPage extends StatefulWidget {
   final double totalPrice;
-  final double shippingCost;
   final List<CartItem> cartItems;
 
   const CheckoutPage({
     super.key,
     required this.totalPrice,
-    required this.shippingCost,
     required this.cartItems,
   });
+
+  @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  double shippingCost = 0.0;
+  String selectedShippingOption = 'COD'; // Default shipping option
+
+  final Map<String, double> shippingOptions = {
+    'JNE': 10000,
+    'J&T': 12000,
+    'SiCepat': 9000,
+    'COD': 0, // Free for COD
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text('Checkout', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF4A1E9E),
       ),
@@ -30,13 +43,50 @@ class CheckoutPage extends StatelessWidget {
               children: [
                 _buildAddressSection(),
                 const Divider(thickness: 1),
+                SizedBox(height: 8.0,),
                 _buildCartItemsList(),
+                const Divider(thickness: 1),
+                _buildShippingOptions(),
                 const Divider(thickness: 1),
                 _buildPaymentDetails(),
               ],
             ),
           ),
           _buildConfirmPaymentButton(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShippingOptions() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Shipping Options',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Column(
+            children: shippingOptions.entries.map((option) {
+              return RadioListTile<String>(
+                title: Text(
+                  '${option.key} (Rp ${option.value.toStringAsFixed(0)})',
+                  style: const TextStyle(fontSize: 14),
+                ),
+                value: option.key,
+                groupValue: selectedShippingOption,
+                onChanged: (value) {
+                  setState(() {
+                    selectedShippingOption = value!;
+                    shippingCost = shippingOptions[selectedShippingOption]!;
+                  });
+                },
+              );
+            }).toList(),
+          ),
         ],
       ),
     );
@@ -58,7 +108,7 @@ class CheckoutPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Jakarta, Indonesia',
+                  'Jakarta, Indonesia ',
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
               ],
@@ -82,7 +132,7 @@ class CheckoutPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
-        children: cartItems.map((item) {
+        children: widget.cartItems.map((item) {
           return Card(
             elevation: 4,
             margin: const EdgeInsets.only(bottom: 16),
@@ -132,7 +182,7 @@ class CheckoutPage extends StatelessWidget {
   }
 
   Widget _buildPaymentDetails() {
-    final subtotal = cartItems.fold<double>(
+    final subtotal = widget.cartItems.fold<double>(
         0.0, (sum, item) => sum + (item.price * item.quantity));
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -183,11 +233,10 @@ class CheckoutPage extends StatelessWidget {
 
   Widget _buildConfirmPaymentButton(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          _showPaymentSuccessDialog(context);
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
@@ -203,24 +252,4 @@ class CheckoutPage extends StatelessWidget {
     );
   }
 
-  void _showPaymentSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Payment Successful'),
-          content: const Text('Thank you for your purchase!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close dialog
-                Navigator.pop(context); // Back to previous page
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
