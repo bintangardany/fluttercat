@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutternews/user/user_home.dart';
+import 'transactions_list.dart';
+import 'transactions_item.dart';
 
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({super.key});
@@ -87,7 +89,6 @@ class _TransactionsPageState extends State<TransactionsPage>
   }
 }
 
-// Widget untuk AppBar
 class CustomAppBar extends StatelessWidget {
   final String title;
   const CustomAppBar({Key? key, required this.title}) : super(key: key);
@@ -109,7 +110,6 @@ class CustomAppBar extends StatelessWidget {
   }
 }
 
-// Widget untuk TabBar
 class CustomTabBar extends StatelessWidget {
   final TabController controller;
   const CustomTabBar({Key? key, required this.controller}) : super(key: key);
@@ -127,7 +127,6 @@ class CustomTabBar extends StatelessWidget {
   }
 }
 
-// Widget untuk List Transaksi
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   const TransactionList({Key? key, required this.transactions})
@@ -149,74 +148,8 @@ class TransactionList extends StatelessWidget {
   }
 }
 
-// Widget untuk Item Transaksi
-class TransactionItem extends StatelessWidget {
-  final Transaction transaction;
-  const TransactionItem({Key? key, required this.transaction}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.only(top: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(transaction.imagePath,
-                  width: 80, height: 80, fit: BoxFit.cover),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Order ID: ${transaction.orderId}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  Text(transaction.productName,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Quantity: ${transaction.quantity}',
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    transaction.status,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: transaction.status == 'Pending'
-                            ? Colors.orange
-                            : transaction.status == 'On Process'
-                                ? Colors.blue
-                                : Colors.green),
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              'Rp${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
-// Widget untuk Empty State
 class EmptyState extends StatelessWidget {
   const EmptyState({Key? key}) : super(key: key);
 
@@ -255,21 +188,3 @@ class EmptyState extends StatelessWidget {
   }
 }
 
-// Class untuk struktur Transaksi
-class Transaction {
-  final String orderId;
-  final String productName;
-  final double price;
-  final String imagePath;
-  final String status;
-  final int quantity;
-
-  Transaction({
-    required this.orderId,
-    required this.productName,
-    required this.price,
-    required this.imagePath,
-    required this.status,
-    required this.quantity,
-  });
-}

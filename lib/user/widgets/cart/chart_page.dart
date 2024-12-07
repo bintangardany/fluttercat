@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'checkout_page.dart';
+import '../checkout/checkout_page.dart';
 import 'package:flutternews/user/widgets/cart/cart_item.dart';
 
 class CartPage extends StatefulWidget {
@@ -17,12 +17,12 @@ class _CartPageState extends State<CartPage> {
       price: 150000,
       quantity: 1,
     ),
-    CartItem(
-      name: 'Premium Cat Food',
-      imagePath: 'images/cat4.jpg',
-      price: 150000,
-      quantity: 2,
-    ),
+    // CartItem(
+    //   name: 'Premium Cat Food',
+    //   imagePath: 'images/cat4.jpg',
+    //   price: 150000,
+    //   quantity: 2,
+    // ),
     // CartItem(
     //   name: 'Premium Cat Food',
     //   imagePath: 'images/cat4.jpg',

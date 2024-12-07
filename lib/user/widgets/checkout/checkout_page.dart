@@ -1,7 +1,7 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'cart_item.dart';
+import '../cart/cart_item.dart';
+import 'checkout_shipping.dart';
 
 class CheckoutPage extends StatefulWidget {
   final double totalPrice;
@@ -19,13 +19,13 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   double shippingCost = 0.0;
-  String selectedShippingOption = 'COD'; // Default shipping option
+  String selectedShippingOption = 'COD'; 
 
   final Map<String, double> shippingOptions = {
     'JNE': 10000,
     'J&T': 12000,
     'SiCepat': 9000,
-    'COD': 0, // Free for COD
+    'COD': 0, 
   };
 
   @override
@@ -46,7 +46,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 SizedBox(height: 8.0,),
                 _buildCartItemsList(),
                 const Divider(thickness: 1),
-                _buildShippingOptions(),
+ShippingOptions(
+                  selectedOption: selectedShippingOption,
+                  options: shippingOptions,
+                  onSelected: (value) {
+                    setState(() {
+                      selectedShippingOption = value;
+                      shippingCost = shippingOptions[selectedShippingOption]!;
+                    });
+                  },
+                ),
                 const Divider(thickness: 1),
                 _buildPaymentDetails(),
               ],
@@ -58,39 +67,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  Widget _buildShippingOptions() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Shipping Options',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Column(
-            children: shippingOptions.entries.map((option) {
-              return RadioListTile<String>(
-                title: Text(
-                  '${option.key} (Rp ${option.value.toStringAsFixed(0)})',
-                  style: const TextStyle(fontSize: 14),
-                ),
-                value: option.key,
-                groupValue: selectedShippingOption,
-                onChanged: (value) {
-                  setState(() {
-                    selectedShippingOption = value!;
-                    shippingCost = shippingOptions[selectedShippingOption]!;
-                  });
-                },
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildAddressSection() {
     return Padding(

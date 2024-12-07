@@ -11,7 +11,6 @@ class CartItem {
     required this.quantity,
   });
 
-  // Method to create a new CartItem with updated values
   CartItem copyWith({
     String? name,
     String? imagePath,
