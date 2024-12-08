@@ -49,8 +49,9 @@ class _AdminChatListScreenState extends State<AdminChatListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Chat List'),
-        centerTitle: true,
+        backgroundColor: Color(0xFF4A1E9E),
+        title: const Text('Admin Chat List',style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: _userChats.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -60,8 +61,8 @@ class _AdminChatListScreenState extends State<AdminChatListScreen> {
                 final user = _userChats[index];
                 return ListTile(
                   onTap: () => _navigateToChatDetail(user),
-                  leading: CircleAvatar(
-                    child: Text(user['email'][0].toUpperCase()),
+                  leading: CircleAvatar(backgroundColor: Color(0xFF4A1E9E),
+                    child: Text(user['email'][0].toUpperCase(),style: TextStyle(color: Colors.white),),
                   ),
                   title: Text(user['email']),
                   subtitle: Text(user['role']),
@@ -80,7 +81,7 @@ class _AdminChatListScreenState extends State<AdminChatListScreen> {
 
 class AdminChatDetailScreen extends StatefulWidget {
   final String userId;
-  final String userEmail;
+  final String userEmail; 
 
   const AdminChatDetailScreen(
       {super.key, required this.userId, required this.userEmail});
@@ -127,8 +128,9 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat with ${widget.userEmail}'),
-        centerTitle: true,
+                backgroundColor: Color(0xFF4A1E9E),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text('Chat with ${widget.userEmail}',style: TextStyle(color: Colors.white),),
       ),
       body: Column(
         children: [

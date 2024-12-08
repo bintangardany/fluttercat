@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutternews/admin/chat/chat_admin.dart';
+import 'package:flutternews/admin/widgets/chat/chat_admin.dart';
 import 'package:flutternews/pages/onboarding.dart';
 
 class AdminHome extends StatelessWidget {

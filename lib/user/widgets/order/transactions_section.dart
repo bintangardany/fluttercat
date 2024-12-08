@@ -17,7 +17,7 @@ class _TransactionsPageState extends State<TransactionsPage>
   // List of pending transactions
   List<Transaction> pendingTransactions = [
     Transaction(
-      orderId: '01',
+      orderId: '0123456789',
       productName: 'Premium Cat Food',
       price: 150000,
       imagePath: 'images/cat4.jpg',

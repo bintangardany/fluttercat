@@ -92,6 +92,7 @@ class _SignupState extends State<Signup> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             color: Color(0xFF4A1E9E),
@@ -115,7 +116,7 @@ class _SignupState extends State<Signup> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "Sign up to get started with our app",
+                      "Sign up to get started",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,

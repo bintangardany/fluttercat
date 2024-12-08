@@ -19,8 +19,8 @@ class _EnhancedPromoSliderState extends State<EnhancedPromoSlider> {
     {
       'title': 'Product Sale!',
       'subtitle': 'On all products',
-      'icon': Icons.local_offer,
-      'color': Colors.green[900],
+      'icon': Icons.discount,
+      'color': Colors.indigo[900],
     },
     {
       'title': 'Free Shipping!',

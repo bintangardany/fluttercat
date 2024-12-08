@@ -4,7 +4,8 @@ import 'transactions_item.dart';
 class OrderDetailPage extends StatefulWidget {
   final Transaction transaction; // Assuming you already have this model
 
-  const OrderDetailPage({Key? key, required this.transaction}) : super(key: key);
+  const OrderDetailPage({Key? key, required this.transaction})
+      : super(key: key);
 
   @override
   State<OrderDetailPage> createState() => _OrderDetailPageState();
@@ -26,7 +27,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text('Order Detail', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Order Detail', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF4A1E9E),
       ),
       body: Column(
@@ -37,7 +39,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 _buildOrderSection(),
                 const Divider(thickness: 1),
                 _buildTransactionDetailSection(),
-                 const Divider(thickness: 1),
+                const Divider(thickness: 1),
                 _buildAddressSection(),
                 const Divider(thickness: 1),
                 _buildShippingOptionsSection(),
@@ -52,21 +54,24 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     );
   }
 
-    Widget _buildOrderSection() {
+  Widget _buildOrderSection() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.fromLTRB(16, 8, 0, 8),
       child: Row(
         children: [
-                            Text(
-                  'Order Id: ${widget.transaction.orderId}',
-                  style: TextStyle(fontSize: 18, color: Color(0xFF4A1E9E), fontWeight: FontWeight.bold),
-                ),
-
+          Text(
+            'Order Id: ${widget.transaction.orderId}',
+            style: TextStyle(
+                fontSize: 18,
+                color: Color(0xFF4A1E9E),
+                fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
   }
-    Widget _buildAddressSection() {
+
+  Widget _buildAddressSection() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -93,53 +98,87 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     );
   }
 
-
   // Transaction detail section (Order info)
   Widget _buildTransactionDetailSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(widget.transaction.imagePath,
-                width: 80, height: 80, fit: BoxFit.cover),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    final transaction = widget.transaction;
+
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.all(16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            // Gambar Produk
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                transaction.imagePath,
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 16),
+
+            // Informasi Transaksi
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    transaction.productName,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Quantity: ${transaction.quantity}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    transaction.status,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: transaction.status == 'Pending'
+                          ? Colors.orange
+                          : transaction.status == 'On Process'
+                              ? Colors.blue
+                              : Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Total Harga
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  widget.transaction.productName,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Quantity: ${widget.transaction.quantity}',
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  widget.transaction.status,
-                  style: TextStyle(
+                  'Rp ${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: widget.transaction.status == 'Pending'
-                        ? Colors.orange
-                        : widget.transaction.status == 'On Process'
-                            ? Colors.blue
-                            : Colors.green,
+                    color: Color(0xFF4A1E9E),
                   ),
                 ),
               ],
             ),
-          ),
-          Text(
-            'Rp ${(widget.transaction.price * widget.transaction.quantity).toStringAsFixed(0)}',
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -151,14 +190,16 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Shipping Options', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Shipping Options',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           DropdownButton<String>(
             value: selectedShippingOption,
             onChanged: (value) {
               setState(() {
                 selectedShippingOption = value!;
-                shippingCost = shippingOptions[selectedShippingOption]!; // Update shipping cost based on selection
+                shippingCost = shippingOptions[
+                    selectedShippingOption]!; // Update shipping cost based on selection
               });
             },
             items: shippingOptions.keys
@@ -185,13 +226,15 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Payment Details', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Payment Details',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Subtotal', style: TextStyle(fontSize: 14)),
-              Text('Rp ${subtotal.toStringAsFixed(0)}', style: const TextStyle(fontSize: 14)),
+              Text('Rp ${subtotal.toStringAsFixed(0)}',
+                  style: const TextStyle(fontSize: 14)),
             ],
           ),
           const SizedBox(height: 8),
@@ -199,17 +242,22 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Shipping Cost', style: TextStyle(fontSize: 14)),
-              Text('Rp ${shippingCost.toStringAsFixed(0)}', style: const TextStyle(fontSize: 14)),
+              Text('Rp ${shippingCost.toStringAsFixed(0)}',
+                  style: const TextStyle(fontSize: 14)),
             ],
           ),
           const Divider(thickness: 1, height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Total', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              const Text('Total',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               Text(
                 'Rp ${(subtotal + shippingCost).toStringAsFixed(0)}',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF4A1E9E)),
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4A1E9E)),
               ),
             ],
           ),
