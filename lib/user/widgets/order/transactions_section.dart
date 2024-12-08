@@ -19,10 +19,11 @@ class _TransactionsPageState extends State<TransactionsPage>
     Transaction(
       orderId: '01',
       productName: 'Premium Cat Food',
-      price: 15000,
+      price: 150000,
       imagePath: 'images/cat4.jpg',
       status: 'Pending',
-      quantity: 2,
+      description: 'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
+      quantity: 1,
     ),
   ];
 

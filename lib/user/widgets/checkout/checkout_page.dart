@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutternews/user/widgets/product_detail_page.dart';
 import '../cart/cart_item.dart';
 import 'checkout_shipping.dart';
 
@@ -46,7 +47,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 SizedBox(height: 8.0,),
                 _buildCartItemsList(),
                 const Divider(thickness: 1),
-ShippingOptions(
+            ShippingOptions(
                   selectedOption: selectedShippingOption,
                   options: shippingOptions,
                   onSelected: (value) {
@@ -104,58 +105,107 @@ ShippingOptions(
     );
   }
 
-  Widget _buildCartItemsList() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        children: widget.cartItems.map((item) {
-          return Card(
+Widget _buildCartItemsList() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    child: Column(
+      children: widget.cartItems.map((item) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetailPage(
+                  imagePath: item.imagePath,
+                  name: item.name,
+                  price: item.price.toString(),
+                  description: item.description,
+                ),
+              ),
+            );
+          },
+          child: Card(
             elevation: 4,
             margin: const EdgeInsets.only(bottom: 16),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
+                  // Gambar Produk
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(item.imagePath,
-                        width: 80, height: 80, fit: BoxFit.cover),
+                    child: Image.asset(
+                      item.imagePath,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   const SizedBox(width: 16),
+
+                  // Informasi Produk
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(item.name,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(
+                          item.name,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                         const SizedBox(height: 4),
                         Text(
-                          'quantity: ${item.quantity}',
-                          style:
-                              const TextStyle(fontSize: 14, color: Colors.grey),
+                          'Desc: ${item.description}',
+                          style: TextStyle(
+                            fontSize: 14,
+                        color:  Colors.grey[600],
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Quantity: ${item.quantity}',
+                          style: TextStyle(
+                            fontSize: 14,fontWeight: 
+                            FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Text(
-                    'Rp ${(item.price * item.quantity).toStringAsFixed(0)}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
+
+                  // Harga Produk
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(padding: EdgeInsets.only(left: 4.0)),
+                      Text(
+                        'Rp ${(item.price * item.quantity).toStringAsFixed(0)}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF4A1E9E),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          );
-        }).toList(),
-      ),
-    );
-  }
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
 
   Widget _buildPaymentDetails() {
     final subtotal = widget.cartItems.fold<double>(

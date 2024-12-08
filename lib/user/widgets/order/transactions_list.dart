@@ -63,13 +63,13 @@ class TransactionItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Order ID: ${transaction.orderId}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                      ),
-                    ),
+                    // Text(
+                    //   'Order ID: ${transaction.orderId}',
+                    //   style: TextStyle(
+                    //     fontSize: 16,
+                    //     color: Colors.grey[600],
+                    //   ),
+                    // ),
                     Text(
                       transaction.productName,
                       style: const TextStyle(
@@ -77,9 +77,16 @@ class TransactionItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
+                      'Desc: ${transaction.description}',
+                      maxLines: 1,overflow: TextOverflow.ellipsis,
+                      style:  TextStyle(
+                          fontSize: 14, color: Colors.grey[600]),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
                       'Quantity: ${transaction.quantity}',
                       style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w400),
+                          fontSize: 14, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -98,7 +105,7 @@ class TransactionItem extends StatelessWidget {
               ),
               Text(
                 'Rp${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600,color: Color(0xFF4A1E9E)),
               ),
             ],
           ),

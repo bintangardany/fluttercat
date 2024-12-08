@@ -7,10 +7,9 @@ class BannerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return SingleChildScrollView(
+    return SingleChildScrollView(padding: const EdgeInsets.all(16.0),
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
         padding: EdgeInsets.symmetric(
           horizontal: 12.0,
           vertical: 20.0,

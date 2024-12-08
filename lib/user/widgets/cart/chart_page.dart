@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../checkout/checkout_page.dart';
 import 'package:flutternews/user/widgets/cart/cart_item.dart';
+import 'package:flutternews/user/widgets/product_detail_page.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -15,6 +16,7 @@ class _CartPageState extends State<CartPage> {
       name: 'Premium Cat Food',
       imagePath: 'images/cat4.jpg',
       price: 150000,
+      description: 'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
       quantity: 1,
     ),
     // CartItem(
@@ -121,54 +123,97 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildCartItem(CartItem cartItem, int index) {
-    return Dismissible(
-      key: Key(cartItem.name),
-      direction: DismissDirection.endToStart,
-      onDismissed: (direction) {
-        _removeItem(index);
+Widget _buildCartItem(CartItem cartItem, int index) {
+  return Dismissible(
+    key: Key(cartItem.name),
+    direction: DismissDirection.endToStart,
+    onDismissed: (direction) {
+      _removeItem(index);
+    },
+    background: Container(
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: 20.0),
+      color: Colors.red,
+      child: const Icon(Icons.delete, color: Colors.white),
+    ),
+    child: GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailPage(
+              imagePath: cartItem.imagePath,
+              name: cartItem.name,
+              price: cartItem.price.toString(),
+              description: cartItem.description,
+            ),
+          ),
+        );
       },
-      background: Container(
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 20.0),
-        color: Colors.red,
-        child: const Icon(Icons.delete, color: Colors.white),
-      ),
       child: Card(
-        elevation: 4,
         margin: const EdgeInsets.only(bottom: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
+              // Gambar Produk
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(cartItem.imagePath,
-                    width: 80, height: 80, fit: BoxFit.cover),
+                child: Image.asset(
+                  cartItem.imagePath,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: 16),
+
+              // Informasi Produk
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(cartItem.name,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      cartItem.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text('Rp ${cartItem.price.toStringAsFixed(0)}',
-                        style:
-                            TextStyle(fontSize: 16, color: Colors.grey[600])),
+                    Text(
+                      'Desc: ${cartItem.description}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Rp ${cartItem.price.toStringAsFixed(0)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF4A1E9E),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
               ),
+
+              // Kontrol Kuantitas
               _buildQuantityControls(index, cartItem),
             ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildQuantityControls(int index, CartItem cartItem) {
     return Row(

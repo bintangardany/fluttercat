@@ -53,8 +53,8 @@ class FeaturedProducts extends StatelessWidget {
               ProductItem(
                 imagePath: 'images/cat4.jpg',
                 name: 'Premium Cat Food',
-                price: '29.000',
-                description: 'High-quality nutrition',
+                price: '150.000',
+                description: 'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
               ),
               ProductItem(
                 imagePath: 'images/cat4.jpg',

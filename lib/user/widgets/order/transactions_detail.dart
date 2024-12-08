@@ -34,7 +34,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           Expanded(
             child: ListView(
               children: [
+                _buildOrderSection(),
+                const Divider(thickness: 1),
                 _buildTransactionDetailSection(),
+                 const Divider(thickness: 1),
+                _buildAddressSection(),
                 const Divider(thickness: 1),
                 _buildShippingOptionsSection(),
                 const Divider(thickness: 1),
@@ -47,6 +51,48 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       ),
     );
   }
+
+    Widget _buildOrderSection() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+                            Text(
+                  'Order Id: ${widget.transaction.orderId}',
+                  style: TextStyle(fontSize: 18, color: Color(0xFF4A1E9E), fontWeight: FontWeight.bold),
+                ),
+
+        ],
+      ),
+    );
+  }
+    Widget _buildAddressSection() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          const Icon(Icons.location_on, color: Color(0xFF4A1E9E), size: 32),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Delivery Address',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Jakarta, Indonesia ',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   // Transaction detail section (Order info)
   Widget _buildTransactionDetailSection() {
@@ -64,10 +110,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Order ID: ${widget.transaction.orderId}',
-                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                ),
                 Text(
                   widget.transaction.productName,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

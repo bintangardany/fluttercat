@@ -4,6 +4,7 @@ class Transaction {
   final double price;
   final String imagePath;
   final String status;
+  final String description;
   final int quantity;
 
   Transaction({
@@ -12,6 +13,7 @@ class Transaction {
     required this.price,
     required this.imagePath,
     required this.status,
+    required this.description,
     required this.quantity,
   });
 }
