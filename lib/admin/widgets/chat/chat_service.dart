@@ -22,15 +22,10 @@ class ChatService {
       }
 
       // Fetch sender and receiver roles
-      DocumentSnapshot senderDoc = await _firestore
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
-      
-      DocumentSnapshot receiverDoc = await _firestore
-          .collection('users')
-          .doc(receiverId)
-          .get();
+      DocumentSnapshot senderDoc =
+          await _firestore.collection('users').doc(currentUser.uid).get();
+      DocumentSnapshot receiverDoc =
+          await _firestore.collection('users').doc(receiverId).get();
 
       String senderRole = senderDoc['role'] ?? '';
       String receiverRole = receiverDoc['role'] ?? '';
@@ -47,9 +42,22 @@ class ChatService {
         'senderRole': senderRole,
         'receiverId': receiverId,
         'message': message.trim(),
-        'isRead': false,
+        'isRead': false, // New messages are initially unread
         'timestamp': FieldValue.serverTimestamp(),
       });
+
+      // If the receiver is an admin, mark all previous unread messages as read.
+      if (senderRole == 'admin') {
+        QuerySnapshot unreadMessages = await _firestore
+            .collection('chats')
+            .where('receiverId', isEqualTo: receiverId)
+            .where('isRead', isEqualTo: false)
+            .get();
+
+        for (var doc in unreadMessages.docs) {
+          await doc.reference.update({'isRead': true});
+        }
+      }
     } catch (e) {
       print('Chat Service Error: $e');
       rethrow;
@@ -58,9 +66,7 @@ class ChatService {
 
   // Get comprehensive chat stream for all roles
   Stream<List<Map<String, dynamic>>> getChatStream(
-    String userId, 
-    String receiverId
-  ) {
+      String userId, String receiverId) {
     return _firestore
         .collection('chats')
         .where('senderId', whereIn: [userId, receiverId])
@@ -79,8 +85,8 @@ class ChatService {
               'timestamp': data['timestamp'] ?? Timestamp.now(),
             };
           }).toList()
-            ..sort((a, b) => 
-              (b['timestamp'] as Timestamp).compareTo(a['timestamp']));
+            ..sort((a, b) =>
+                (b['timestamp'] as Timestamp).compareTo(a['timestamp']));
         });
   }
 
@@ -91,11 +97,8 @@ class ChatService {
       if (currentUser == null) return [];
 
       // Verify admin role
-      DocumentSnapshot adminDoc = await _firestore
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
-
+      DocumentSnapshot adminDoc =
+          await _firestore.collection('users').doc(currentUser.uid).get();
       String role = adminDoc['role'] ?? '';
       if (role != 'admin') return [];
 
@@ -111,11 +114,10 @@ class ChatService {
 
       List<Map<String, dynamic>> userDetails = [];
       for (String userId in uniqueUserIds) {
-        DocumentSnapshot userDoc = await _firestore
-            .collection('users')
-            .doc(userId)
-            .get();
-        
+        DocumentSnapshot userDoc =
+            await _firestore.collection('users').doc(userId).get();
+
+        // Calculate unread messages count
         QuerySnapshot unreadMessages = await _firestore
             .collection('chats')
             .where('senderId', isEqualTo: userId)

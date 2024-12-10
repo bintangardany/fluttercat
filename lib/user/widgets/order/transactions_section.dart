@@ -22,7 +22,8 @@ class _TransactionsPageState extends State<TransactionsPage>
       price: 150000,
       imagePath: 'images/cat4.jpg',
       status: 'Pending',
-      description: 'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
+      description:
+          'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
       quantity: 1,
     ),
   ];
@@ -98,7 +99,8 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       floating: false,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
+      iconTheme: IconThemeData(color: Colors.white),
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         title: Text(title, style: const TextStyle(color: Colors.white)),
@@ -149,8 +151,6 @@ class TransactionList extends StatelessWidget {
   }
 }
 
-
-
 class EmptyState extends StatelessWidget {
   const EmptyState({Key? key}) : super(key: key);
 
@@ -188,4 +188,3 @@ class EmptyState extends StatelessWidget {
     );
   }
 }
-

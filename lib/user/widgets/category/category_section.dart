@@ -29,7 +29,7 @@ class CategorySection extends StatelessWidget {
               CategoryItem(
                   title: 'Cat', icon: Icons.pets, itemCount: '50+ items'),
               CategoryItem(
-                  title: 'Food', icon: Icons.fastfood, itemCount: '50+ items'),
+                  title: 'Food', icon: Icons.fastfood, itemCount: '43+ items'),
               CategoryItem(
                   title: 'Cage', icon: Icons.bed, itemCount: '20+ items'),
             ],

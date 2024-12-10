@@ -16,7 +16,8 @@ class _CartPageState extends State<CartPage> {
       name: 'Premium Cat Food',
       imagePath: 'images/cat4.jpg',
       price: 150000,
-      description: 'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
+      description:
+          'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
       quantity: 1,
     ),
     // CartItem(
@@ -123,97 +124,99 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-Widget _buildCartItem(CartItem cartItem, int index) {
-  return Dismissible(
-    key: Key(cartItem.name),
-    direction: DismissDirection.endToStart,
-    onDismissed: (direction) {
-      _removeItem(index);
-    },
-    background: Container(
-      alignment: Alignment.centerRight,
-      padding: const EdgeInsets.only(right: 20.0),
-      color: Colors.red,
-      child: const Icon(Icons.delete, color: Colors.white),
-    ),
-    child: GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailPage(
-              imagePath: cartItem.imagePath,
-              name: cartItem.name,
-              price: cartItem.price.toString(),
-              description: cartItem.description,
-            ),
-          ),
-        );
+  Widget _buildCartItem(CartItem cartItem, int index) {
+    return Dismissible(
+      key: Key(cartItem.name),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        _removeItem(index);
       },
-      child: Card(
-        margin: const EdgeInsets.only(bottom: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              // Gambar Produk
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  cartItem.imagePath,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
+      background: Container(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 20.0),
+        color: Colors.red,
+        child: const Icon(Icons.delete, color: Colors.white),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailPage(
+                imagePath: cartItem.imagePath,
+                name: cartItem.name,
+                price: cartItem.price.toString(),
+                description: cartItem.description,
               ),
-              const SizedBox(width: 16),
-
-              // Informasi Produk
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      cartItem.name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Desc: ${cartItem.description}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Rp ${cartItem.price.toStringAsFixed(0)}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF4A1E9E),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+            ),
+          );
+        },
+        child: Card(
+          margin: const EdgeInsets.only(bottom: 16),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          elevation: 4,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                // Gambar Produk
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    cartItem.imagePath,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
+                const SizedBox(width: 16),
 
-              // Kontrol Kuantitas
-              _buildQuantityControls(index, cartItem),
-            ],
+                // Informasi Produk
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        cartItem.name,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Desc: ${cartItem.description}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Rp ${cartItem.price.toStringAsFixed(0)}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF4A1E9E),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Kontrol Kuantitas
+                _buildQuantityControls(index, cartItem),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildQuantityControls(int index, CartItem cartItem) {
     return Row(
@@ -266,13 +269,14 @@ Widget _buildCartItem(CartItem cartItem, int index) {
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          // BoxShadow(
-          //     color: Colors.grey.withOpacity(0.3),
-          //     spreadRadius: 1,
-          //     blurRadius: 3,
-          //     offset: const Offset(0, -3))
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(0.2),
+        //     spreadRadius: 1,
+        //     blurRadius: 3,
+        //     offset: const Offset(0, -3),
+        //   ),
+        // ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutternews/admin/widgets/chat/chat_admin.dart';
+import 'package:flutternews/admin/widgets/test/test.dart';
 import 'package:flutternews/pages/onboarding.dart';
 
 class AdminHome extends StatelessWidget {
@@ -95,21 +96,24 @@ class AdminHome extends StatelessWidget {
                 title: 'User Management',
                 icon: Icons.supervised_user_circle,
                 onTap: () {
-                  Navigator.pushNamed(context, '/user-management');
+                  Navigator.pushNamed(context, '');
                 },
               ),
               _buildDashboardCard(
                 title: 'Product Management',
                 icon: Icons.shopping_bag,
                 onTap: () {
-                  Navigator.pushNamed(context, '/product-management');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AdminProductScreen()));
                 },
               ),
               _buildDashboardCard(
                 title: 'Order Management',
                 icon: Icons.receipt,
                 onTap: () {
-                  Navigator.pushNamed(context, '/order-management');
+                  Navigator.pushNamed(context, '');
                 },
               ),
               _buildDashboardCard(

@@ -131,10 +131,12 @@ class _EnhancedPromoSliderState extends State<EnhancedPromoSlider> {
                           const SizedBox(height: 16),
                           ElevatedButton(
                             onPressed: () {
-Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => UserHome()),
-);                            },
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserHome()),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.black87,
@@ -142,7 +144,12 @@ Navigator.push(
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                            child: const Text('Shop Now'),
+                            child: const Text(
+                              'Shop Now',
+                              style: TextStyle(
+                                color: Color(0xFF4A1E9E),
+                              ),
+                            ),
                           ),
                         ],
                       ),

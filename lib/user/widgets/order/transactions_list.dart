@@ -27,7 +27,8 @@ class TransactionList extends StatelessWidget {
 // Widget untuk Item Transaksi
 class TransactionItem extends StatelessWidget {
   final Transaction transaction;
-  const TransactionItem({Key? key, required this.transaction}) : super(key: key);
+  const TransactionItem({Key? key, required this.transaction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,15 +73,16 @@ class TransactionItem extends StatelessWidget {
                     // ),
                     Text(
                       transaction.productName,
+                      maxLines: 1,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'Desc: ${transaction.description}',
-                      maxLines: 1,overflow: TextOverflow.ellipsis,
-                      style:  TextStyle(
-                          fontSize: 14, color: Colors.grey[600]),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -105,7 +107,10 @@ class TransactionItem extends StatelessWidget {
               ),
               Text(
                 'Rp${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600,color: Color(0xFF4A1E9E)),
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A1E9E)),
               ),
             ],
           ),

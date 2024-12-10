@@ -10,7 +10,7 @@ import 'package:flutternews/user/widgets/cage/cage_product.dart';
 import 'package:flutternews/user/widgets/profile/profile_user.dart';
 import 'package:flutternews/user/widgets/order/transactions_section.dart';
 import 'package:flutternews/user/widgets/home/welcome_section.dart';
-import 'package:flutternews/user/widgets/home/slider_section.dart';
+// import 'package:flutternews/user/widgets/home/slider_section.dart';
 import 'package:flutternews/user/widgets/category/category_section.dart';
 import 'package:flutternews/user/widgets/featured/featured_products.dart';
 
@@ -58,14 +58,16 @@ class HomePage extends StatelessWidget {
     return ListView(
       children: [
         WelcomeSection(),
-        EnhancedPromoSlider(),
+        // EnhancedPromoSlider(),
         CategorySection(),
         FeaturedProducts(),
         BannerSection(),
         CatProducts(),
         FoodProducts(),
         CageProducts(),
-        SizedBox(height: 12.0,),
+        SizedBox(
+          height: 12.0,
+        ),
       ],
     );
   }

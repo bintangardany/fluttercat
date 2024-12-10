@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-/// SliverAppBar Widget
 class SliverAppBarWidget extends StatelessWidget {
   const SliverAppBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return SliverAppBar(
       expandedHeight: 200.0,
       floating: false,
@@ -18,7 +20,7 @@ class SliverAppBarWidget extends StatelessWidget {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 CircleAvatar(
                   radius: 50,
                   backgroundImage: AssetImage('images/cat1.jpg'),
@@ -32,7 +34,7 @@ class SliverAppBarWidget extends StatelessWidget {
                       color: Colors.white),
                 ),
                 Text(
-                  'rizky@gmail.com',
+                  '${user?.email}',
                   style: TextStyle(fontSize: 16, color: Colors.white70),
                 ),
               ],
@@ -195,27 +197,27 @@ class InfoTile extends StatelessWidget {
   }
 }
 
-  void _showDetailDialog(BuildContext context, String label, String value) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(label),
-          content: SingleChildScrollView(
-            child: Text(value, style: const TextStyle(fontSize: 16)),
+void _showDetailDialog(BuildContext context, String label, String value) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(label),
+        content: SingleChildScrollView(
+          child: Text(value, style: const TextStyle(fontSize: 16)),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Close'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+        ],
+      );
+    },
+  );
+}
 
 /// InfoItem Model (Jika Perlu untuk Keperluan Lain)
 class InfoItem {

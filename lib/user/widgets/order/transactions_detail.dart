@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutternews/user/widgets/product_detail_page.dart';
 import 'transactions_item.dart';
 
 class OrderDetailPage extends StatefulWidget {
@@ -87,7 +88,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Jakarta, Indonesia ',
+                  'Bekasi, Indonesia ',
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
               ],
@@ -101,83 +102,104 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   // Transaction detail section (Order info)
   Widget _buildTransactionDetailSection() {
     final transaction = widget.transaction;
-
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.all(16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            // Gambar Produk
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                transaction.imagePath,
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProductDetailPage(
+                  imagePath: transaction.imagePath,
+                  name: transaction.productName,
+                  price: transaction.price.toString(),
+                  description: transaction.description)),
+        );
+      },
+      child: Card(
+        elevation: 4,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              // Gambar Produk
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  transaction.imagePath,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
+              const SizedBox(width: 16),
 
-            // Informasi Transaksi
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              // Informasi Transaksi
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      transaction.productName,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Desc: ${transaction.description}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    Text(
+                      'Quantity: ${transaction.quantity}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      transaction.status,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: transaction.status == 'Pending'
+                            ? Colors.orange
+                            : transaction.status == 'On Process'
+                                ? Colors.blue
+                                : Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Total Harga
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    transaction.productName,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Quantity: ${transaction.quantity}',
+                    'Rp ${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
                     style: const TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    transaction.status,
-                    style: TextStyle(
-                      fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: transaction.status == 'Pending'
-                          ? Colors.orange
-                          : transaction.status == 'On Process'
-                              ? Colors.blue
-                              : Colors.green,
+                      color: Color(0xFF4A1E9E),
                     ),
                   ),
                 ],
               ),
-            ),
-
-            // Total Harga
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Rp ${(transaction.price * transaction.quantity).toStringAsFixed(0)}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF4A1E9E),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

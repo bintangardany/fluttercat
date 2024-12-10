@@ -108,13 +108,15 @@ class _UserChatScreenState extends State<UserChatScreen> {
 
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'Admin Chat',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: Color(0xFF4A1E9E),
-          automaticallyImplyLeading: false),
+        title: const Text(
+          'Admin Chat',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xFF4A1E9E),
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
       body: Column(
         children: [
           Expanded(

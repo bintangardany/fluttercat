@@ -49,20 +49,31 @@ class _AdminChatListScreenState extends State<AdminChatListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF4A1E9E),
-        title: const Text('Admin Chat List',style: TextStyle(color: Colors.white)),
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: const Color(0xFF4A1E9E),
+        title: Text(
+          'Admin Chat List',
+          style: TextStyle(color: Colors.white),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: _userChats.isEmpty
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
+          : ListView.separated(
               itemCount: _userChats.length,
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.grey[300],
+                thickness: 1.5, // Set thickness here
+              ),
               itemBuilder: (context, index) {
                 final user = _userChats[index];
                 return ListTile(
                   onTap: () => _navigateToChatDetail(user),
-                  leading: CircleAvatar(backgroundColor: Color(0xFF4A1E9E),
-                    child: Text(user['email'][0].toUpperCase(),style: TextStyle(color: Colors.white),),
+                  leading: CircleAvatar(
+                    backgroundColor: const Color(0xFF4A1E9E),
+                    child: Text(
+                      user['email'][0].toUpperCase(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                   title: Text(user['email']),
                   subtitle: Text(user['role']),
@@ -81,7 +92,7 @@ class _AdminChatListScreenState extends State<AdminChatListScreen> {
 
 class AdminChatDetailScreen extends StatefulWidget {
   final String userId;
-  final String userEmail; 
+  final String userEmail;
 
   const AdminChatDetailScreen(
       {super.key, required this.userId, required this.userEmail});
@@ -94,6 +105,23 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
   final ChatService _chatService = ChatService();
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _markMessagesAsRead();
+  }
+
+  Future<void> _markMessagesAsRead() async {
+    try {
+      await _chatService.markMessagesAsRead(
+          widget.userId, FirebaseAuth.instance.currentUser?.uid ?? '');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to mark messages as read: $e')),
+      );
+    }
+  }
 
   void _sendMessage() async {
     final message = _messageController.text.trim();
@@ -128,9 +156,12 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-                backgroundColor: Color(0xFF4A1E9E),
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text('Chat with ${widget.userEmail}',style: TextStyle(color: Colors.white),),
+        title: Text(
+          'Chat with ${widget.userEmail}',
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF4A1E9E),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
@@ -145,6 +176,12 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                   return const Center(child: CircularProgressIndicator());
                 }
 
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                }
+
                 final messages = snapshot.data ?? [];
                 return ListView.builder(
                   controller: _scrollController,
@@ -155,25 +192,48 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                     final isSentByMe = message['senderId'] ==
                         FirebaseAuth.instance.currentUser?.uid;
 
-                    return Align(
-                      alignment: isSentByMe
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 8),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 14),
-                        decoration: BoxDecoration(
-                          color:
-                              isSentByMe ? Colors.blue[100] : Colors.grey[200],
-                          borderRadius: BorderRadius.circular(20),
+                    final timestamp =
+                        message['timestamp']?.toDate() ?? DateTime.now();
+                    final timeFormatted =
+                        '${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
+
+                    return Column(
+                      crossAxisAlignment: isSentByMe
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: isSentByMe
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: isSentByMe
+                                  ? const Color(0xFF4A1E9E)
+                                  : Colors.grey[300],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              message['message'] ?? 'No message',
+                              style: TextStyle(
+                                color: isSentByMe ? Colors.white : Colors.black,
+                              ),
+                            ),
+                          ),
                         ),
-                        child: Text(
-                          message['message'],
-                          style: const TextStyle(fontSize: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
+                          child: Text(
+                            timeFormatted,
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black54),
+                          ),
                         ),
-                      ),
+                      ],
                     );
                   },
                 );
@@ -188,7 +248,7 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                   child: TextField(
                     controller: _messageController,
                     decoration: InputDecoration(
-                      hintText: 'Type your message...',
+                      hintText: 'Type a message...',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -198,10 +258,9 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                FloatingActionButton(
+                IconButton(
+                  icon: const Icon(Icons.send, color: Color(0xFF4A1E9E)),
                   onPressed: _sendMessage,
-                  mini: true,
-                  child: const Icon(Icons.send),
                 ),
               ],
             ),
