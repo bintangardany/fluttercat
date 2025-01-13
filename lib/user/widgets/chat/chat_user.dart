@@ -162,7 +162,7 @@ class _UserChatScreenState extends State<UserChatScreen> {
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
+                                vertical: 5, horizontal: 16),
                             decoration: BoxDecoration(
                               color: isSentByMe
                                   ? Color(0xFF4A1E9E)
@@ -179,11 +179,11 @@ class _UserChatScreenState extends State<UserChatScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
+                              horizontal: 16, vertical: 5),
                           child: Text(
                             timeFormatted,
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.black54),
+                                fontSize: 12, color: Colors.black87),
                           ),
                         ),
                       ],

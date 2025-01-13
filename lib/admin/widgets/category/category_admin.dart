@@ -5,48 +5,43 @@ import 'package:image_picker/image_picker.dart';
 class Product {
   final String id;
   final String name;
-  final double price;
+  final String total;
   final String? imagePath;
-  final String? description;
 
   Product({
     required this.id,
     required this.name,
-    required this.price,
+    required this.total,
     this.imagePath,
-    required this.description,
   });
 
   Product copyWith({
     String? id,
     String? name,
-    double? price,
+    String? total,
     String? imagePath,
-    String? description,
   }) {
     return Product(
       id: id ?? this.id,
       name: name ?? this.name,
-      price: price ?? this.price,
+      total: total ?? this.total,
       imagePath: imagePath ?? this.imagePath,
-      description: description ?? this.description,
     );
   }
 }
 
-class AdminProductScreen extends StatefulWidget {
-  const AdminProductScreen({Key? key}) : super(key: key);
+class CategoryAdmins extends StatefulWidget {
+  const CategoryAdmins({Key? key}) : super(key: key);
 
   @override
   _AdminProductScreenState createState() => _AdminProductScreenState();
 }
 
-class _AdminProductScreenState extends State<AdminProductScreen> {
+class _AdminProductScreenState extends State<CategoryAdmins> {
   final List<Product> _products = [];
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _priceController = TextEditingController();
+  final _totalController = TextEditingController();
   final _imagePicker = ImagePicker();
   String? _editingProductId;
   String? _selectedImagePath;
@@ -61,8 +56,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
   @override
   void dispose() {
     _nameController.dispose();
-    _descriptionController.dispose();
-    _priceController.dispose();
+    _totalController.dispose();
     super.dispose();
   }
 
@@ -71,10 +65,8 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
       _products.addAll([
         Product(
           id: '1',
-          name: 'Premium Cat Food',
-          description:
-              'Lorem ipsum odor amet, consectetuer adipiscing elit. Est netus hac arcu sem volutpat. Montes diam sed sem id natoque pharetra varius',
-          price: 150000,
+          name: 'Air Conditioner',
+          total: '21+ items',
           imagePath: null,
         ),
       ]);
@@ -98,8 +90,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
       [Product? product]) async {
     if (product != null) {
       _nameController.text = product.name;
-      _descriptionController.text = product.description ?? '';
-      _priceController.text = product.price.toString();
+      _totalController.text = product.total;
       _editingProductId = product.id;
       _selectedImagePath = product.imagePath;
     } else {
@@ -109,7 +100,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
     await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(product == null ? 'Add Product' : 'Edit Product'),
+        title: Text(product == null ? 'Add Category' : 'Edit Category'),
         content: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -156,29 +147,11 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(labelText: 'Description'),
+                  controller: _totalController,
+                  decoration: const InputDecoration(labelText: 'Total'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter a product description';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _priceController,
-                  decoration: const InputDecoration(
-                    labelText: 'Price',
-                    prefixText: 'Rp ',
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a price';
-                    }
-                    if (double.tryParse(value) == null) {
-                      return 'Please enter a valid number';
+                      return 'Please enter a category total';
                     }
                     return null;
                   },
@@ -220,8 +193,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
       _products.add(Product(
         id: DateTime.now().toString(),
         name: _nameController.text.trim(),
-        description: _descriptionController.text.trim(),
-        price: double.parse(_priceController.text),
+        total: _totalController.text.trim(),
         imagePath: _selectedImagePath,
       ));
     });
@@ -234,8 +206,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
       if (index != -1) {
         _products[index] = _products[index].copyWith(
           name: _nameController.text.trim(),
-          description: _descriptionController.text.trim(),
-          price: double.parse(_priceController.text),
+          total: _totalController.text.trim(),
           imagePath: _selectedImagePath,
         );
       }
@@ -271,8 +242,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
 
   void _clearForm() {
     _nameController.clear();
-    _descriptionController.clear();
-    _priceController.clear();
+    _totalController.clear();
     _editingProductId = null;
     _selectedImagePath = null;
   }
@@ -285,8 +255,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
           columns: const [
             DataColumn(label: Text('Image')),
             DataColumn(label: Text('Name')),
-            DataColumn(label: Text('Price')),
-            DataColumn(label: Text('Description')),
+            DataColumn(label: Text('Total')),
             DataColumn(label: Text('Actions')),
           ],
           rows: _products.map((product) {
@@ -309,8 +278,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
                 ),
               ),
               DataCell(Text(product.name)),
-              DataCell(Text('Rp ${product.price.toStringAsFixed(0)}')),
-              DataCell(Text(product.description ?? '-')),
+              DataCell(Text(product.total)),
               DataCell(Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -337,7 +305,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          'Admin Product Management',
+          'Admin Category Management',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF4A1E9E),
@@ -355,7 +323,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
       ),
       body: _products.isEmpty
           ? const Center(
-              child: Text('No products available. Add some products!'),
+              child: Text('No category available. Add some category!'),
             )
           : _isTableView
               ? _buildTableView()
@@ -395,16 +363,7 @@ class _AdminProductScreenState extends State<AdminProductScreen> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Rp ${product.price.toStringAsFixed(0)}',
-                                style: const TextStyle()),
-                            if (product.description != null)
-                              Text(
-                                product.description!,
-                                maxLines: 2,
-                                overflow: TextOverflow
-                                    .ellipsis, // Add ellipsis if the text is too long
-                                style: TextStyle(color: Colors.grey[500]),
-                              ),
+                            Text(product.total, style: const TextStyle()),
                           ],
                         ),
                         trailing: Row(

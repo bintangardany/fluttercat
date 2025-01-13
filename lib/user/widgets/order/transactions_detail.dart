@@ -215,21 +215,27 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           const Text('Shipping Options',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          DropdownButton<String>(
-            value: selectedShippingOption,
-            onChanged: (value) {
-              setState(() {
-                selectedShippingOption = value!;
-                shippingCost = shippingOptions[
-                    selectedShippingOption]!; // Update shipping cost based on selection
-              });
-            },
-            items: shippingOptions.keys
-                .map((option) => DropdownMenuItem(
-                      value: option,
-                      child: Text(option),
-                    ))
-                .toList(),
+          // DropdownButton<String>(
+          //   value: selectedShippingOption,
+          //   onChanged: (value) {
+          //     setState(() {
+          //       selectedShippingOption = value!;
+          //       shippingCost = shippingOptions[selectedShippingOption]!;
+          //     });
+          //   },
+          //   items: shippingOptions.keys
+          //       .map((option) => DropdownMenuItem(
+          //             value: option,
+          //             child: Text(option),
+          //           ))
+          //       .toList(),
+          // ),
+          Text(
+            selectedShippingOption,
+            style: TextStyle(
+                fontSize: 15,
+                color: Color(0xFF4A1E9E),
+                fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
           Text(

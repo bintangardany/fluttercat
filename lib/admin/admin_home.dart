@@ -1,18 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutternews/admin/widgets/category/category_admin.dart';
 import 'package:flutternews/admin/widgets/chat/chat_admin.dart';
 import 'package:flutternews/admin/widgets/test/test.dart';
+import 'package:flutternews/admin/widgets/user/user_admin.dart';
 import 'package:flutternews/pages/onboarding.dart';
 
-class AdminHome extends StatelessWidget {
+class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
 
-  Future<void> _signOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const Onboarding()),
-    );
+  @override
+  State<AdminHome> createState() => _AdminHomeState();
+}
+
+class _AdminHomeState extends State<AdminHome> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    const AdminDashboardPage(),
+    const AdminChatListScreen(),
+    const UserAdmin(),
+    const AdminProductScreen(),
+    const CategoryAdmins(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -33,12 +48,57 @@ class AdminHome extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView(
-        children: [
-          _buildWelcomeSection(),
-          _buildDashboardGrid(context),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFF4A1E9E),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Users',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Products',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
+          ),
         ],
       ),
+    );
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Onboarding()),
+    );
+  }
+}
+
+class AdminDashboardPage extends StatelessWidget {
+  const AdminDashboardPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        _buildWelcomeSection(),
+        _buildDashboardGrid(context),
+      ],
     );
   }
 
@@ -96,7 +156,8 @@ class AdminHome extends StatelessWidget {
                 title: 'User Management',
                 icon: Icons.supervised_user_circle,
                 onTap: () {
-                  Navigator.pushNamed(context, '');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserAdmin()));
                 },
               ),
               _buildDashboardCard(
@@ -124,6 +185,18 @@ class AdminHome extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const AdminChatListScreen(),
+                    ),
+                  );
+                },
+              ),
+              _buildDashboardCard(
+                title: 'Category Management',
+                icon: Icons.category,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CategoryAdmins(),
                     ),
                   );
                 },

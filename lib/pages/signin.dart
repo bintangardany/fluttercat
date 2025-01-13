@@ -85,7 +85,6 @@ class _SigninState extends State<Signin> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,

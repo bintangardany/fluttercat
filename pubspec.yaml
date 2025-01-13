@@ -36,6 +36,7 @@ dependencies:
   cloud_firestore: ^5.5.0  # Use a specific version instead of ^latest_version
   provider: ^6.0.3
   url_launcher: ^6.1.10
+  image_picker: ^0.8.7+3  # Replace with the latest stable version
 
 
 

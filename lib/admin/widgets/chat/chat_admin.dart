@@ -209,7 +209,7 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
+                                vertical: 5, horizontal: 16),
                             decoration: BoxDecoration(
                               color: isSentByMe
                                   ? const Color(0xFF4A1E9E)
@@ -226,11 +226,11 @@ class _AdminChatDetailScreenState extends State<AdminChatDetailScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
+                              horizontal: 16, vertical: 5),
                           child: Text(
                             timeFormatted,
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.black54),
+                                fontSize: 12, color: Colors.black87),
                           ),
                         ),
                       ],
