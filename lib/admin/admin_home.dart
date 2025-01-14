@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutternews/admin/widgets/category/category_admin.dart';
 import 'package:flutternews/admin/widgets/chat/chat_admin.dart';
+import 'package:flutternews/admin/widgets/order/order_admin.dart';
 import 'package:flutternews/admin/widgets/test/test.dart';
 import 'package:flutternews/admin/widgets/user/user_admin.dart';
 import 'package:flutternews/pages/onboarding.dart';
@@ -20,6 +21,7 @@ class _AdminHomeState extends State<AdminHome> {
     const AdminDashboardPage(),
     const AdminChatListScreen(),
     const UserAdmin(),
+    const OrderAdmin(),
     const AdminProductScreen(),
     const CategoryAdmins(),
   ];
@@ -66,6 +68,10 @@ class _AdminHomeState extends State<AdminHome> {
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
             label: 'Users',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt),
+            label: 'Order ',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag),
@@ -174,7 +180,10 @@ class AdminDashboardPage extends StatelessWidget {
                 title: 'Order Management',
                 icon: Icons.receipt,
                 onTap: () {
-                  Navigator.pushNamed(context, '');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OrderAdmin()));
                 },
               ),
               _buildDashboardCard(
