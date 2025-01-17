@@ -7,6 +7,7 @@ import 'package:flutternews/user/widgets/cat/cat_product.dart';
 import 'package:flutternews/user/widgets/chat/chat_user.dart';
 import 'package:flutternews/user/widgets/food/food_product.dart';
 import 'package:flutternews/user/widgets/cage/cage_product.dart';
+import 'package:flutternews/user/widgets/home/slider_section.dart';
 import 'package:flutternews/user/widgets/profile/profile_user.dart';
 import 'package:flutternews/user/widgets/order/transactions_section.dart';
 import 'package:flutternews/user/widgets/home/welcome_section.dart';
@@ -58,7 +59,7 @@ class HomePage extends StatelessWidget {
     return ListView(
       children: [
         WelcomeSection(),
-        // EnhancedPromoSlider(),
+        EnhancedPromoSlider(),
         CategorySection(),
         FeaturedProducts(),
         BannerSection(),
@@ -66,7 +67,7 @@ class HomePage extends StatelessWidget {
         FoodProducts(),
         CageProducts(),
         SizedBox(
-          height: 12.0,
+          height: 16.0,
         ),
       ],
     );

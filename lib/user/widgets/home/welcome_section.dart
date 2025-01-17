@@ -15,7 +15,7 @@ class WelcomeSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Welcome back, ${user?.email ?? "Cat Lover"}!',
+            'Welcome back, ${user?.email ?? ""}!',
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -24,7 +24,7 @@ class WelcomeSection extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Find the purr-fect products for your feline friend',
+            'Find the purr-fect products for you',
             style: TextStyle(
               fontSize: 16,
               color: Colors.white.withOpacity(0.8),

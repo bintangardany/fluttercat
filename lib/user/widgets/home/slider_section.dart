@@ -64,6 +64,7 @@ class _EnhancedPromoSliderState extends State<EnhancedPromoSlider> {
       children: [
         const SizedBox(height: 16),
         SizedBox(
+          width: double.infinity,
           height: 220,
           child: PageView.builder(
             controller: _pageController,
@@ -81,7 +82,7 @@ class _EnhancedPromoSliderState extends State<EnhancedPromoSlider> {
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   color: promo['color'],
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.15),

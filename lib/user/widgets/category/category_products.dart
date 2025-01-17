@@ -56,19 +56,21 @@ class CategoryProducts extends StatelessWidget {
   /// Mengembalikan daftar produk berdasarkan kategori
   List<Map<String, String>> _getProductsForCategory(String category) {
     switch (category) {
-      case 'Cat':
+      case 'Fashion':
         return [
           {
-            'imagePath': 'images/cat4.jpg',
-            'name': 'Cat Tree',
-            'price': '49.000',
-            'description': 'Perfect play tower for your cat',
+            'imagePath': 'images/f1.jpg',
+            'name': 'OLEVS Mens Watches Minimalist Ultra Thin Fashion Casual',
+            'price': '43.530',
+            'description':
+                'Japan Quartz movement, button battery - could use for 2-3 years,Hardlex crystal glass - high hardness,durables, scratch resistant mineral, genuine leather, - better breathability,durables and a comfortable wearing experience.',
           },
           {
-            'imagePath': 'images/cat4.jpg',
-            'name': 'Cat Scratcher',
-            'price': '29.000',
-            'description': 'Keep your cat\'s claws healthy',
+            'imagePath': 'images/f2.jpg',
+            'name': 'CLU Watch Minuit Ladies - Default Title / Black',
+            'price': '100.000',
+            'description':
+                'Cluse Watch Minuit Ladies CL30022. Our Minuit collection pays tribute to starry nights and elegant evening looks. The delicate design of this featherlight watch makes it the perfect accessory for a fashionable, yet subtle result. The watch features a 33 mm case, where black is combined with rose gold details to create a beautiful minimalist timepiece. The strap can be easily interchanged, allowing you to personalise your watch.',
           },
         ];
       case 'Food':

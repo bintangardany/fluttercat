@@ -222,7 +222,7 @@ class _CartPageState extends State<CartPage> {
     return Row(
       children: [
         IconButton(
-          icon: const Icon(Icons.remove_circle_outline),
+          icon: const Icon(Icons.remove),
           onPressed: () {
             _updateQuantity(index, cartItem.quantity - 1);
           },
@@ -239,7 +239,7 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.add_circle_outline),
+          icon: const Icon(Icons.add),
           onPressed: () {
             _updateQuantity(index, cartItem.quantity + 1);
           },

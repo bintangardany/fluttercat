@@ -27,11 +27,13 @@ class CategorySection extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: const [
               CategoryItem(
-                  title: 'Cat', icon: Icons.pets, itemCount: '50+ items'),
+                  title: 'Fashion', icon: Icons.style, itemCount: '50+ items'),
               CategoryItem(
-                  title: 'Food', icon: Icons.fastfood, itemCount: '43+ items'),
+                  title: 'Sport', icon: Icons.sports, itemCount: '43+ items'),
               CategoryItem(
-                  title: 'Cage', icon: Icons.bed, itemCount: '20+ items'),
+                  title: 'Kids',
+                  icon: Icons.child_care,
+                  itemCount: '20+ items'),
             ],
           ),
         ),

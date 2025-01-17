@@ -86,6 +86,11 @@ class EditProfileButton extends StatelessWidget {
                 TextField(decoration: InputDecoration(labelText: 'Gender')),
                 TextField(
                     decoration: InputDecoration(labelText: 'Date of Birth')),
+                TextField(decoration: InputDecoration(labelText: 'Street')),
+                TextField(
+                    decoration: InputDecoration(labelText: 'Sub District')),
+                TextField(decoration: InputDecoration(labelText: 'City')),
+                TextField(decoration: InputDecoration(labelText: 'Province')),
               ],
             ),
           ),

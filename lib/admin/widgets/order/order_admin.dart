@@ -19,8 +19,8 @@ class _OrderAdminState extends State<OrderAdmin>
       price: 150000,
       imagePath: 'images/cat4.jpg',
       status: 'Pending',
-      description: 'Premium cat food description',
-      quantity: 1,
+      description: 'Premium cat food for your cat',
+      quantity: 2,
     ),
   ];
 
@@ -36,7 +36,7 @@ class _OrderAdminState extends State<OrderAdmin>
       appBar: AppBar(
         title: const Text(
           'Order Management',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
         backgroundColor: const Color(0xFF4A1E9E),
         iconTheme: IconThemeData(color: Colors.white),
@@ -51,8 +51,7 @@ class _OrderAdminState extends State<OrderAdmin>
             Tab(text: 'Completed'),
           ],
           labelColor: Colors.white,
-          unselectedLabelColor: Colors.white,
-          indicatorColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
         ),
       ),
       body: TabBarView(
@@ -82,16 +81,41 @@ class _OrderAdminState extends State<OrderAdmin>
 
   Widget _buildOrderCard(Transaction order) {
     return Card(
+      elevation: 4,
       margin: const EdgeInsets.all(8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: ListTile(
-        title: Text('Order #${order.orderId}'),
+        leading: Image.network(
+          order.imagePath,
+          height: 80,
+          width: 80,
+          fit: BoxFit.cover,
+        ),
+        title: Text(
+          'Order #${order.orderId}',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Product: ${order.productName}'),
-            Text('Quantity: ${order.quantity}'),
             Text(
-                'Total: Rp${(order.price * order.quantity).toStringAsFixed(0)}'),
+              '${order.productName}',
+              style: TextStyle(),
+            ),
+            Text('Quantity: ${order.quantity}'),
+            Text('Rp${(order.price * order.quantity).toStringAsFixed(0)}'),
+            Text(
+              order.status,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: order.status == 'Pending'
+                    ? Colors.orange
+                    : order.status == 'On Process'
+                        ? Colors.blue
+                        : Colors.green,
+              ),
+            ),
           ],
         ),
         trailing: PopupMenuButton<String>(
@@ -99,9 +123,7 @@ class _OrderAdminState extends State<OrderAdmin>
           itemBuilder: (context) => [
             const PopupMenuItem(
               value: 'process',
-              child: Text(
-                'Process Order',
-              ),
+              child: Text('Process Order'),
             ),
             const PopupMenuItem(
               value: 'complete',
@@ -109,9 +131,7 @@ class _OrderAdminState extends State<OrderAdmin>
             ),
             const PopupMenuItem(
               value: 'cancel',
-              child: Text(
-                'Cancel Order',
-              ),
+              child: Text('Cancel Order'),
             ),
           ],
         ),
@@ -124,45 +144,124 @@ class _OrderAdminState extends State<OrderAdmin>
     // Implement order status changes
     switch (action) {
       case 'process':
-        // Update order status to "On Process"
         break;
       case 'complete':
-        // Update order status to "Completed"
         break;
       case 'cancel':
-        // Cancel the order
         break;
     }
   }
 
   void _showOrderDetails(Transaction order) {
-    // Show detailed order information
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Order #${order.orderId}'),
-        content: SingleChildScrollView(
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          padding: const EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(order.imagePath,
-                  height: 100, width: 100, fit: BoxFit.cover),
-              const SizedBox(height: 8),
-              Text('Product: ${order.productName}'),
-              Text('Description: ${order.description}'),
-              Text('Quantity: ${order.quantity}'),
-              Text('Price: Rp${order.price.toStringAsFixed(0)}'),
-              Text(
-                  'Total: Rp${(order.price * order.quantity).toStringAsFixed(0)}'),
-              Text('Status: ${order.status}'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Order #${order.orderId}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      order.imagePath,
+                      height: 120,
+                      width: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          order.productName,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          order.description,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          order.status,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: order.status == 'Pending'
+                                ? Colors.orange
+                                : order.status == 'On Process'
+                                    ? Colors.blue
+                                    : Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              _buildInfoRow('Quantity', '${order.quantity}'),
+              _buildInfoRow('Price', 'Rp${order.price.toStringAsFixed(0)}'),
+              _buildInfoRow('Total',
+                  'Rp${(order.price * order.quantity).toStringAsFixed(0)}'),
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[600],
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+            ),
           ),
         ],
       ),
