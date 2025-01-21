@@ -51,22 +51,27 @@ class FeaturedProducts extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: [
               ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Premium Cat Food',
-                price: '150.000',
-                description: 'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
+                imagePath: 'images/f1.jpg',
+                name: 'OLEVS Mens Watches Minimalist Ultra Thin Fashion Casual',
+                price: '100.000',
+                description:
+                    'Japan Quartz movement, button battery - could use for 2-3 years,Hardlex crystal glass - high hardness,durables, scratch resistant mineral, genuine leather, - better breathability,durables and a comfortable wearing experience.',
               ),
               ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Cozy Cat Bed',
-                price: '39.000',
-                description: 'Comfortable sleep',
+                imagePath: 'images/s2.jpg',
+                name:
+                    'Ultimate Fitness Watch for Men and Women Waterproof Sleep Tracker Pedometer',
+                price: '100.000',
+                description:
+                    'Introducing the Waterproof Smart Watch with Sleep Tracker, Pedometer, and Multiple Sports Modes - the perfect fitness watch for both men and women. This innovative device is designed to help you achieve your fitness goals and keep track of your health effortlessly. With its advanced features and sleek design, it is the ideal companion for anyone who wants to stay fit and active. Here are five key benefits of the Waterproof Smart Watch: Sleep Tracker: Monitor your sleep patterns and improve your',
               ),
               ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Grooming Kit',
-                price: '24.000',
-                description: 'Complete cat care',
+                imagePath: 'images/k2.jpg',
+                name:
+                    'Quartz WatchPOPETPOP Children Slap Watch - Slap Bracelets',
+                price: '60.000',
+                description:
+                    ' Quartz WatchPOPETPOP Children Slap Watch - Slap Bracelets for Girls Boys - Cartoon Funny Kids Quartz Watch Slap Wristwatch Toys for Students Kids (Tortoise) Check more at https://www.digitalcontentinsider.com/kids-quartz-watchpopetpop-children-slap-watch-slap-bracelets-for-girls-boys-cartoon-funny-kids-quartz-watch-slap-wristwatch-toys-for-students-kids-tortoise/',
               ),
             ],
           ),
