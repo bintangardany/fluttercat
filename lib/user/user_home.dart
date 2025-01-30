@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
     return ListView(
       children: [
         WelcomeSection(),
-        EnhancedPromoSlider(),
+        // EnhancedPromoSlider(),
         CategorySection(),
         FeaturedProducts(),
         BannerSection(),

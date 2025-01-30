@@ -13,11 +13,11 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   List<CartItem> cartItems = [
     CartItem(
-      name: 'Premium Cat Food',
-      imagePath: 'images/cat4.jpg',
-      price: 150000,
+      name: 'OLEVS Mens Watches Minimalist Ultra Thin Fashion Casual',
+      imagePath: 'images/f1.jpg',
+      price: 100000,
       description:
-          'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
+          'Japan Quartz movement, button battery - could use for 2-3 years,Hardlex crystal glass - high hardness,durables, scratch resistant mineral, genuine leather, - better breathability,durables and a comfortable wearing experience.',
       quantity: 1,
     ),
     // CartItem(

@@ -18,12 +18,12 @@ class _TransactionsPageState extends State<TransactionsPage>
   List<Transaction> pendingTransactions = [
     Transaction(
       orderId: '0123456789',
-      productName: 'Premium Cat Food',
-      price: 150000,
+      productName: 'OLEVS Mens Watches Minimalist Ultra Thin Fashion Casual',
+      price: 100000,
       imagePath: 'assets/images/f1.jpg',
       status: 'Pending',
       description:
-          'Lorem ipsum odor amet, consectetuer adipiscing elit. Fames sed sit luctus sollicitudin pretium nullam. Commodo non congue lacus felis tempus sodales parturient porta nunc. Facilisi molestie feugiat blandit ipsum pharetra quisque ultricies. Luctus luctus vitae elementum turpis, tellus facilisi malesuada nam proin. Hac mattis arcu eros porttitor blandit neque convallis gravida?',
+          'Japan Quartz movement, button battery - could use for 2-3 years,Hardlex crystal glass - high hardness,durables, scratch resistant mineral, genuine leather, - better breathability,durables and a comfortable wearing experience.',
       quantity: 1,
     ),
   ];
