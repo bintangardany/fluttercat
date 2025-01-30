@@ -16,7 +16,7 @@ class CageProducts extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Cage Products',
+                'Kids Products',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ class CageProducts extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CategoryProducts(category: 'Cage'),
+                      builder: (context) => CategoryProducts(category: 'Kids'),
                     ),
                   );
                 },
@@ -52,22 +52,20 @@ class CageProducts extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: [
               ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Premium Cat Food',
-                price: '29.000',
-                description: 'High-quality nutrition',
+                imagePath: 'images/k1.jpg',
+                name:
+                    'Disney AVENGERS Kids Smart Watch, Digital, 41 mm, Rubber Strap, AVG4665',
+                price: '60.000',
+                description:
+                    'Disney avengers kids smart watch, digital, 41 mm, rubber strap, avg4665',
               ),
               ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Cozy Cat Bed',
-                price: '39.000',
-                description: 'Comfortable sleep',
-              ),
-              ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Grooming Kit',
-                price: '24.000',
-                description: 'Complete cat care',
+                imagePath: 'images/k2.jpg',
+                name:
+                    'Quartz WatchPOPETPOP Children Slap Watch - Slap Bracelets',
+                price: '60.000',
+                description:
+                    ' Quartz WatchPOPETPOP Children Slap Watch - Slap Bracelets for Girls Boys - Cartoon Funny Kids Quartz Watch Slap Wristwatch Toys for Students Kids (Tortoise) Check more at https://www.digitalcontentinsider.com/kids-quartz-watchpopetpop-children-slap-watch-slap-bracelets-for-girls-boys-cartoon-funny-kids-quartz-watch-slap-wristwatch-toys-for-students-kids-tortoise/',
               ),
             ],
           ),

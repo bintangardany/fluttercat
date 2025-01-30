@@ -16,7 +16,7 @@ class FoodProducts extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Food Products',
+                'Sport Products',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ class FoodProducts extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CategoryProducts(category: 'Food'),
+                      builder: (context) => CategoryProducts(category: 'Sport'),
                     ),
                   );
                 },
@@ -52,22 +52,20 @@ class FoodProducts extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: [
               ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Premium Cat Food',
-                price: '29.000',
-                description: 'High-quality nutrition',
+                imagePath: 'images/s1.jpg',
+                name:
+                    'Digital Uwatch RunS Smart Watch Fitness Tracker Watches Digital Watch Waterproof | eBay',
+                price: '100.000',
+                description:
+                    'Find many great new & used options and get the best deals for Digital Uwatch RunS Smart Watch Fitness Tracker Watches Digital Watch Waterproof at the best online prices at eBay! Free shipping for many products!',
               ),
               ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Cozy Cat Bed',
-                price: '39.000',
-                description: 'Comfortable sleep',
-              ),
-              ProductItem(
-                imagePath: 'images/cat4.jpg',
-                name: 'Grooming Kit',
-                price: '24.000',
-                description: 'Complete cat care',
+                imagePath: 'images/s2.jpg',
+                name:
+                    'Ultimate Fitness Watch for Men and Women Waterproof Sleep Tracker Pedometer',
+                price: '100.000',
+                description:
+                    'Introducing the Waterproof Smart Watch with Sleep Tracker, Pedometer, and Multiple Sports Modes - the perfect fitness watch for both men and women. This innovative device is designed to help you achieve your fitness goals and keep track of your health effortlessly. With its advanced features and sleek design, it is the ideal companion for anyone who wants to stay fit and active. Here are five key benefits of the Waterproof Smart Watch: Sleep Tracker: Monitor your sleep patterns and improve your',
               ),
             ],
           ),
